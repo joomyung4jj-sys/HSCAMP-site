@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이현세 캠프 — 유니버스 &amp; 커뮤니티 (프로토타입)</title>
+<style>
+:root{
+  color-scheme: dark;
+  --page:#0d0d0d;
+  --surface:#1a1a19;
+  --surface-2:#161514;
+  --surface-3:#211f1e;
+  --ink:#f4f1e8;
+  --ink-2:#c3c2b7;
+  --muted:#898781;
+  --hair:rgba(255,255,255,.09);
+  --hair-2:rgba(255,255,255,.05);
+  --accent:#e66767;
+  --grid:#2c2c2a;
+  --c-film:#3987e5;
+  --c-drama:#008300;
+  --c-anime:#d55181;
+  --c-overseas:#c98500;
+  --c-game:#199e70;
+  --c-reboot:#d95926;
+  --sans:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--page);color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(230,103,103,.35)}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+section{padding:88px 0}
+.sec-head{margin-bottom:40px}
+.sec-kicker{font-size:12px;letter-spacing:.35em;color:var(--accent);font-weight:700;text-transform:uppercase;margin-bottom:12px}
+.sec-title{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-.02em;line-height:1.25}
+.sec-desc{margin-top:14px;color:var(--ink-2);max-width:680px;font-size:15px}
+.sec-desc b{color:var(--ink);font-weight:700}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:90;background:rgba(13,13,13,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--hair)}
+.nav-in{max-width:1140px;margin:0 auto;padding:0 24px;height:56px;display:flex;align-items:center;gap:20px}
+.nav-logo{font-weight:800;font-size:14px;letter-spacing:.16em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.nav-logo em{color:var(--accent);font-style:normal}
+.nav-links{display:flex;gap:4px;margin-left:auto;overflow-x:auto}
+.nav-links a{color:var(--ink-2);text-decoration:none;font-size:13px;padding:7px 12px;border-radius:99px;white-space:nowrap;transition:.15s}
+.nav-links a:hover{color:var(--ink);background:var(--hair-2)}
+
+/* ---------- hero ---------- */
+header{position:relative;padding:110px 0 90px;overflow:hidden;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(230,103,103,.10), transparent 42%),
+    radial-gradient(rgba(255,255,255,.045) 1px, transparent 1.6px);
+  background-size:auto, 22px 22px;
+  border-bottom:1px solid var(--hair)}
+.hero-kicker{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.3em;color:var(--muted);font-weight:600;margin-bottom:26px}
+.hero-kicker .seal{width:34px;height:34px;border:1.5px solid var(--accent);color:var(--accent);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;letter-spacing:0}
+h1{font-size:clamp(40px,7vw,76px);font-weight:900;letter-spacing:-.03em;line-height:1.08}
+h1 .thin{color:var(--muted);font-weight:300}
+.hero-sub{margin-top:22px;font-size:clamp(15px,2vw,18px);color:var(--ink-2);max-width:640px}
+.hero-sub b{color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:14px;overflow:hidden;margin-top:52px}
+.stat{background:var(--surface-2);padding:22px 20px}
+.stat .n{font-size:30px;font-weight:800;letter-spacing:-.02em}
+.stat .n em{font-style:normal;color:var(--accent);font-size:18px;font-weight:700}
+.stat .l{font-size:12.5px;color:var(--muted);margin-top:4px}
+
+/* ---------- universe (network) ---------- */
+.uni-grid{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start}
+@media(max-width:900px){.uni-grid{grid-template-columns:1fr}}
+.net-box{background:var(--surface);border:1px solid var(--hair);border-radius:16px;padding:10px;position:relative}
+.net-box svg{width:100%;height:auto;display:block}
+.net-hint{position:absolute;top:16px;left:18px;font-size:12px;color:var(--muted)}
+.uni-panel{background:var(--surface-2);border:1px solid var(--hair);border-radius:16px;padding:24px;min-height:280px;position:sticky;top:76px}
+.uni-panel h3{font-size:20px;font-weight:800;display:flex;align-items:center;gap:10px}
+.uni-panel h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);flex:none}
+.uni-panel .tag{font-size:12px;color:var(--muted);margin-top:2px}
+.uni-panel p{font-size:13.5px;color:var(--ink-2);margin-top:12px}
+.role-list{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.role-item{display:flex;gap:10px;font-size:13px;align-items:baseline;cursor:pointer;padding:8px 10px;border-radius:8px;border:1px solid var(--hair-2);transition:.15s}
+.role-item:hover{background:var(--surface-3);border-color:var(--hair)}
+.role-item .w{font-weight:700;white-space:nowrap}
+.role-item .r{color:var(--muted)}
+/* svg nodes */
+.n-work circle{fill:var(--surface-3);stroke:var(--hair);stroke-width:1.2;transition:.2s}
+.n-work text{fill:var(--ink-2);font-size:12.5px;font-weight:600;transition:.2s}
+.n-work.has-dossier{cursor:pointer}
+.n-work.has-dossier:hover circle{stroke:var(--ink-2)}
+.n-char circle{fill:#241416;stroke:var(--accent);stroke-width:1.6;cursor:pointer;transition:.2s}
+.n-char text{fill:var(--ink);font-size:14px;font-weight:800;cursor:pointer}
+.n-char .sub{fill:var(--muted);font-size:10.5px;font-weight:500}
+.edge{stroke:var(--grid);stroke-width:1.1;transition:.2s}
+svg .dim{opacity:.13}
+.edge.hi{stroke:var(--accent);stroke-width:1.8}
+.n-char.hi circle{fill:#3a1b1e;stroke-width:2.4}
+.n-work.hi circle{stroke:var(--accent);stroke-width:1.8}
+.n-work.hi text{fill:var(--ink)}
+.indie-note{margin-top:16px;font-size:13px;color:var(--muted);border-left:2px solid var(--hair);padding-left:14px}
+.indie-note b{color:var(--ink-2)}
+
+/* ---------- timeline ---------- */
+.tl-chart-box{background:var(--surface);border:1px solid var(--hair);border-radius:16px;padding:26px 22px 14px;position:relative}
+.tl-chart-box h4{font-size:13px;font-weight:700;color:var(--ink-2);margin-bottom:2px}
+.tl-chart-box .sub{font-size:12px;color:var(--muted);margin-bottom:14px}
+#tlTip{position:fixed;z-index:120;pointer-events:none;background:#242322;border:1px solid var(--hair);border-radius:10px;padding:10px 13px;font-size:12.5px;max-width:280px;box-shadow:0 8px 30px rgba(0,0,0,.5);display:none}
+#tlTip .y{font-weight:800;font-size:13px}
+#tlTip .t{color:var(--ink-2);margin-top:3px}
+#tlTip .more{color:var(--muted)}
+.era-strip{display:flex;gap:10px;overflow-x:auto;padding:18px 2px 6px;scrollbar-width:thin}
+.era{flex:0 0 auto;width:230px;background:var(--surface-2);border:1px solid var(--hair);border-radius:12px;padding:14px 16px}
+.era .y{font-weight:800;color:var(--accent);font-size:14px}
+.era .t{font-size:13px;margin-top:4px;font-weight:700}
+.era .d{font-size:12px;color:var(--muted);margin-top:3px}
+.tl-filters{display:flex;gap:8px;flex-wrap:wrap;margin:34px 0 18px}
+.chip{border:1px solid var(--hair);background:transparent;color:var(--ink-2);border-radius:99px;padding:7px 15px;font-size:13px;cursor:pointer;font-family:inherit;transition:.15s}
+.chip:hover{border-color:var(--muted)}
+.chip.on{background:var(--ink);color:#111;border-color:var(--ink);font-weight:700}
+.decade{margin-bottom:26px}
+.decade h5{font-size:15px;font-weight:800;color:var(--ink);padding-bottom:8px;border-bottom:1px solid var(--hair);margin-bottom:12px;display:flex;justify-content:space-between;align-items:baseline}
+.decade h5 span{font-size:12px;color:var(--muted);font-weight:500}
+.works-flow{display:flex;flex-wrap:wrap;gap:7px}
+.wchip{font-size:12.5px;padding:5px 11px;border-radius:8px;background:var(--surface-2);border:1px solid var(--hair-2);color:var(--ink-2)}
+.wchip .y{color:var(--muted);font-size:11px;margin-left:5px}
+.wchip.star{border-color:rgba(230,103,103,.5);color:var(--ink)}
+.wchip.star::before{content:"★ ";color:var(--accent);font-size:10px}
+.wchip.adapted{background:#1e2430;border-color:rgba(57,135,229,.35)}
+.wchip.dossier{cursor:pointer}
+.wchip.dossier:hover{border-color:var(--ink-2);color:var(--ink)}
+.tl-legend{display:flex;gap:18px;font-size:12px;color:var(--muted);margin-top:14px;flex-wrap:wrap}
+.tl-legend span{display:inline-flex;align-items:center;gap:6px}
+.lg-star{color:var(--accent)}
+.lg-box{width:12px;height:12px;border-radius:4px;display:inline-block}
+
+/* ---------- IP map ---------- */
+.ip-highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:38px}
+.hl{background:var(--surface-2);border:1px solid var(--hair);border-radius:14px;padding:20px;position:relative;overflow:hidden}
+.hl::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--hl-c,var(--accent))}
+.hl .k{font-size:11px;letter-spacing:.18em;color:var(--muted);font-weight:700}
+.hl .t{font-size:16px;font-weight:800;margin-top:6px}
+.hl .d{font-size:12.5px;color:var(--ink-2);margin-top:6px}
+.ip-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);margin-bottom:16px;align-items:center}
+.ip-legend .it{display:inline-flex;align-items:center;gap:6px}
+.ip-legend .sw{width:11px;height:11px;border-radius:50%;display:inline-block}
+.ip-legend .sw.o{background:transparent!important;border:1.6px dashed currentColor}
+.ip-table-wrap{overflow-x:auto;border:1px solid var(--hair);border-radius:16px;background:var(--surface)}
+table.ip{border-collapse:collapse;width:100%;min-width:760px}
+table.ip th,table.ip td{padding:11px 10px;text-align:center;border-bottom:1px solid var(--hair-2);font-size:13px}
+table.ip th{color:var(--muted);font-weight:600;font-size:12px;background:var(--surface-2);position:sticky;top:0}
+table.ip td.wt{text-align:left;font-weight:700;white-space:nowrap;padding-left:18px;cursor:pointer}
+table.ip td.wt:hover{color:var(--accent)}
+table.ip td.wt .y{color:var(--muted);font-weight:400;font-size:11.5px;margin-left:6px}
+table.ip td.wt .co{display:block;font-size:11px;color:var(--muted);font-weight:400}
+table.ip tr:hover td{background:rgba(255,255,255,.02)}
+.ipdot{width:13px;height:13px;border-radius:50%;display:inline-block;position:relative;cursor:help}
+.ipdot.o{background:transparent!important;border:1.7px dashed currentColor;width:12px;height:12px}
+.ipdot.multi::after{content:attr(data-n);position:absolute;top:-7px;right:-9px;font-size:9.5px;font-weight:800;color:var(--ink)}
+td .none{color:#3a3936;font-size:11px}
+.rev-badge{display:inline-block;font-size:10px;font-weight:700;color:var(--c-overseas);border:1px solid var(--c-overseas);border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:1px}
+
+/* ---------- works dex ---------- */
+.dex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:14px}
+.card{background:var(--surface-2);border:1px solid var(--hair);border-radius:16px;padding:22px;cursor:pointer;transition:.18s;display:flex;flex-direction:column;gap:10px}
+.card:hover{transform:translateY(-3px);border-color:var(--muted);background:var(--surface-3)}
+.card .top{display:flex;justify-content:space-between;align-items:baseline}
+.card .yr{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.card .tier{font-size:10.5px;font-weight:800;letter-spacing:.08em;color:var(--accent);border:1px solid rgba(230,103,103,.45);padding:2px 7px;border-radius:5px}
+.card .tier.t1{color:var(--c-film);border-color:rgba(57,135,229,.45)}
+.card h3{font-size:18px;font-weight:800;letter-spacing:-.01em;line-height:1.3}
+.card .log{font-size:13px;color:var(--ink-2);flex:1}
+.card .badges{display:flex;gap:5px;flex-wrap:wrap}
+.mbadge{font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:5px;color:#0d0d0d}
+.mbadge.o{color:inherit;background:transparent!important;border:1.4px dashed currentColor}
+
+/* ---------- modal ---------- */
+.modal-bg{position:fixed;inset:0;background:rgba(8,8,8,.78);backdrop-filter:blur(6px);z-index:200;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:6vh 18px 60px}
+.modal-bg.open{display:flex}
+.modal{background:#191817;border:1px solid var(--hair);border-radius:20px;max-width:720px;width:100%;padding:38px 40px 36px;position:relative;animation:pop .22s ease}
+@keyframes pop{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+.modal .close{position:absolute;top:18px;right:18px;background:var(--surface-3);border:1px solid var(--hair);color:var(--ink-2);width:34px;height:34px;border-radius:50%;font-size:16px;cursor:pointer}
+.modal .meta{font-size:12.5px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px}
+.modal h2{font-size:30px;font-weight:900;letter-spacing:-.02em;line-height:1.2}
+.modal .log{margin-top:10px;font-size:15px;color:var(--ink-2);font-weight:600;border-left:3px solid var(--accent);padding-left:14px}
+.mod-sec{margin-top:26px}
+.mod-sec h4{font-size:12px;letter-spacing:.22em;color:var(--muted);font-weight:700;margin-bottom:10px}
+.mod-sec p{font-size:14px;color:var(--ink-2)}
+.char-chips{display:flex;gap:7px;flex-wrap:wrap}
+.cchip{font-size:12.5px;background:var(--surface-3);border:1px solid var(--hair-2);border-radius:8px;padding:6px 11px}
+.cchip b{color:var(--ink)}
+.cchip span{color:var(--muted)}
+.exp-list{display:flex;flex-direction:column;gap:9px}
+.exp{display:flex;gap:12px;align-items:flex-start;font-size:13.5px;background:var(--surface-2);border:1px solid var(--hair-2);border-radius:10px;padding:11px 14px}
+.exp .pin{width:10px;height:10px;border-radius:50%;flex:none;margin-top:5px}
+.exp .pin.o{background:transparent!important;border:1.6px dashed currentColor}
+.exp .ty{font-size:11px;font-weight:800;letter-spacing:.06em;width:74px;flex:none;margin-top:1px}
+.exp .tx b{color:var(--ink)}
+.exp .tx{color:var(--ink-2)}
+.exp .tx .note{color:var(--muted);font-size:12.5px}
+.reco-grid{display:grid;grid-template-columns:1fr;gap:8px}
+.reco{background:var(--surface-2);border:1px solid var(--hair-2);border-radius:10px;padding:11px 14px;font-size:13.5px;display:flex;gap:10px;align-items:baseline}
+.reco .arrow{color:var(--accent);font-weight:800;flex:none}
+.reco b{color:var(--ink)}
+.reco span{color:var(--muted)}
+.reco.internal{cursor:pointer}
+.reco.internal:hover{border-color:var(--muted)}
+.hist-note{margin-top:10px;font-size:13px;color:var(--ink-2);background:rgba(230,103,103,.06);border:1px solid rgba(230,103,103,.22);border-radius:10px;padding:12px 15px}
+
+/* ---------- moods ---------- */
+.mood-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.mood{background:var(--surface-2);border:1px solid var(--hair);border-radius:18px;padding:26px}
+.mood .emo{font-size:26px}
+.mood h3{font-size:19px;font-weight:800;margin-top:10px}
+.mood .d{font-size:13px;color:var(--muted);margin-top:4px}
+.mood h6{font-size:11px;letter-spacing:.2em;color:var(--muted);font-weight:700;margin:18px 0 8px}
+.mood .in-works{display:flex;gap:6px;flex-wrap:wrap}
+.mood .in-works .wchip{cursor:pointer}
+.mood .in-works .wchip:hover{border-color:var(--ink-2);color:var(--ink)}
+.mood .ext{display:flex;flex-direction:column;gap:6px}
+.mood .ext div{font-size:13px;color:var(--ink-2)}
+.mood .ext b{color:var(--ink)}
+.mood .ext span{color:var(--muted);font-size:12px}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--hair);padding:48px 0 64px;color:var(--muted);font-size:12.5px}
+footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer b{color:var(--ink-2);letter-spacing:.14em}
+footer em{font-style:normal;color:var(--accent)}
+
+/* ---------- community prototype ---------- */
+.proto-bar{background:#241416;border-bottom:1px solid rgba(230,103,103,.3);padding:9px 0;font-size:12.5px;color:var(--ink-2)}
+.proto-bar b{color:var(--accent)}
+.open-pill{display:inline-block;margin-top:34px;font-size:13px;color:var(--ink);border:1px solid rgba(230,103,103,.4);background:rgba(230,103,103,.08);border-radius:99px;padding:8px 18px;font-weight:600}
+.ex-tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.08em;color:#0d0d0d;background:var(--c-overseas);border-radius:4px;padding:2px 7px;vertical-align:2px;margin-left:8px}
+.plaza-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;align-items:start}
+@media(max-width:900px){.plaza-grid{grid-template-columns:1fr}}
+.thread{background:var(--surface);border:1px solid var(--hair);border-radius:18px;padding:28px}
+.thread .top-tag{font-size:11px;letter-spacing:.2em;color:var(--accent);font-weight:800}
+.thread h3{font-size:22px;font-weight:800;margin-top:8px;line-height:1.35}
+.thread .meta{font-size:12.5px;color:var(--muted);margin-top:6px}
+.cmt{border-top:1px solid var(--hair-2);padding:16px 0;display:flex;gap:12px}
+.cmt .avatar{width:34px;height:34px;border-radius:50%;background:var(--surface-3);border:1px solid var(--hair);display:flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+.cmt .who{font-size:12.5px;font-weight:700}
+.cmt .who span{color:var(--muted);font-weight:400;margin-left:8px;font-size:11.5px}
+.cmt p{font-size:13.5px;color:var(--ink-2);margin-top:4px}
+.cmt .likes{font-size:11.5px;color:var(--muted);margin-top:6px}
+.cmt-input{margin-top:14px;display:flex;gap:8px}
+.cmt-input input{flex:1;background:var(--surface-3);border:1px solid var(--hair);border-radius:10px;padding:11px 14px;color:var(--muted);font-family:inherit;font-size:13px}
+.cmt-input button{background:var(--surface-3);color:var(--muted);border:1px solid var(--hair);border-radius:10px;padding:0 18px;font-family:inherit;font-size:13px;cursor:not-allowed}
+.topic-stack{display:flex;flex-direction:column;gap:10px}
+.topic{background:var(--surface-2);border:1px solid var(--hair);border-radius:12px;padding:15px 18px;display:flex;justify-content:space-between;gap:12px;align-items:center;cursor:pointer;transition:.15s}
+.topic:hover{border-color:var(--muted)}
+.topic .t b{display:block;font-size:14px}
+.topic .t span{font-size:12px;color:var(--muted)}
+.topic .n{font-size:12px;color:var(--accent);white-space:nowrap;font-weight:700}
+.letter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:26px}
+.letter-card{background:var(--surface-2);border:1px solid var(--hair);border-radius:16px;padding:24px;position:relative}
+.letter-card .no{font-size:11px;letter-spacing:.22em;color:var(--accent);font-weight:800}
+.letter-card h3{font-size:18px;font-weight:800;margin-top:8px;line-height:1.4}
+.letter-card p{font-size:13px;color:var(--ink-2);margin-top:10px}
+.letter-card .d{font-size:11.5px;color:var(--muted);margin-top:14px}
+.sub-box{background:linear-gradient(135deg,#241416,#1a1a19);border:1px solid rgba(230,103,103,.3);border-radius:18px;padding:30px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.sub-box .tx b{font-size:18px;font-weight:800}
+.sub-box .tx div{font-size:13px;color:var(--ink-2);margin-top:4px}
+.sub-form{display:flex;gap:8px;flex:1;min-width:280px;max-width:440px}
+.sub-form input{flex:1;background:var(--page);border:1px solid var(--hair);border-radius:10px;padding:12px 15px;color:var(--ink);font-family:inherit;font-size:13.5px}
+.sub-form button{background:var(--accent);color:#170808;border:none;border-radius:10px;padding:0 22px;font-weight:800;font-family:inherit;font-size:13.5px;cursor:pointer}
+.sub-msg{width:100%;font-size:12.5px;color:var(--accent);display:none}
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.lib-card{background:var(--surface-2);border:1px solid var(--hair);border-radius:18px;padding:26px}
+.lib-card h3{font-size:18px;font-weight:800}
+.lib-card h3 span{font-size:12px;color:var(--muted);font-weight:400;margin-left:8px}
+.lib-card h6{font-size:11px;letter-spacing:.2em;color:var(--muted);font-weight:700;margin:18px 0 8px}
+.shelf-slot{border:1.5px dashed var(--hair);border-radius:10px;padding:14px;font-size:12.5px;color:var(--muted)}
+.assoc{display:flex;flex-direction:column;gap:8px}
+.assoc .a{background:var(--surface-3);border:1px solid var(--hair-2);border-radius:10px;padding:11px 14px;font-size:13px}
+.assoc .a b{color:var(--ink)}
+.assoc .a span{color:var(--muted);font-size:12px}
+.assoc .a .by{display:block;font-size:11px;color:var(--accent);margin-top:4px}
+.global-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px}
+.gcard{background:var(--surface-2);border:1px solid var(--hair);border-radius:16px;padding:22px;position:relative;overflow:hidden}
+.gcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c-overseas)}
+.gcard .flag{font-size:22px}
+.gcard .k{font-size:11px;letter-spacing:.16em;color:var(--muted);font-weight:700;margin-top:8px}
+.gcard h3{font-size:16px;font-weight:800;margin-top:5px}
+.gcard p{font-size:12.5px;color:var(--ink-2);margin-top:7px}
+.gcard .glink{display:inline-block;margin-top:10px;font-size:12px;font-weight:700;color:var(--c-overseas);text-decoration:none;border-bottom:1px solid rgba(201,133,0,.4)}
+.gcard .glink:hover{color:var(--ink)}
+.gcard.pending{border-style:dashed}
+.gcard.pending::before{background:var(--muted)}
+.modal .plaza-teaser{margin-top:26px;background:#241416;border:1px solid rgba(230,103,103,.28);border-radius:12px;padding:16px 18px}
+.modal .plaza-teaser .k{font-size:11px;letter-spacing:.2em;color:var(--accent);font-weight:800}
+.modal .plaza-teaser .q{font-size:14.5px;font-weight:700;margin-top:6px}
+.modal .plaza-teaser .s{font-size:12px;color:var(--muted);margin-top:5px}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="nav-logo" href="#top">HS<em>CAMP</em> ARCHIVE</a>
+    <div class="nav-links">
+      <a href="#universe">세계관 지도</a>
+      <a href="#timeline">연보</a>
+      <a href="#ipmap">IP 확장</a>
+      <a href="#dex">작품 도감</a>
+      <a href="#moods">정서로 잇기</a>
+      <a href="#plaza">광장</a>
+      <a href="#letter">레터</a>
+      <a href="#library">영감의 서재</a>
+      <a href="#global">해외의 시선</a>
+    </div>
+  </div>
+</nav>
+<div class="proto-bar"><div class="wrap">🏕️ <b>커뮤니티 프로토타입</b> — 광장·레터·독자 추천은 <b>예시 데이터</b>입니다. 실제 광장은 <b>8월, 네이버 독점 연재 종료와 함께</b> 열립니다.</div></div>
+
+<header id="top">
+  <div class="wrap">
+    <div class="hero-kicker"><span class="seal">현</span> LEE HYUN-SE UNIVERSE · SINCE 1979</div>
+    <h1>이현세의 세계를,<br><span class="thin">다음 세대에게.</span></h1>
+    <p class="hero-sub">까치 <b>오혜성</b>은 야구장에서, 링 위에서, 버마전선에서, 미래의 전장에서 다시 태어난다.
+    같은 얼굴로 다른 운명을 사는 인물들이 엮어낸 <b>하나의 거대한 세계</b> — 만화에서 영화·드라마·애니메이션·할리우드,
+    그리고 AI 리메이크까지 이어진 47년의 확장 기록을 아카이빙합니다.</p>
+    <div class="open-pill">🔓 2026년 8월 — 독점 연재가 끝나는 날, 이 아카이브는 광장이 됩니다</div>
+    <div class="stats">
+      <div class="stat"><div class="n">237<em>편</em></div><div class="l">아카이빙 대상 전 작품</div></div>
+      <div class="stat"><div class="n">47<em>년</em></div><div class="l">1979 데뷔 후 창작 활동</div></div>
+      <div class="stat"><div class="n" id="statExp">—</div><div class="l">영화·드라마·애니 등 확장 이력</div></div>
+      <div class="stat"><div class="n">6<em>인</em></div><div class="l">작품을 넘나드는 반복 캐릭터</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="universe">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Star System</div>
+      <div class="sec-title">세계관 지도 — 같은 얼굴, 다른 운명</div>
+      <p class="sec-desc">이현세는 배우를 캐스팅하듯 <b>오혜성(까치)·엄지·마동탁·백두산</b>을 작품마다 다시 불러낸다.
+      이른바 <b>'스타 시스템'</b>. 캐릭터를 누르면 그 인물이 살아낸 운명들이 연결됩니다. 작품 노드를 누르면 상세로 이동합니다.</p>
+    </div>
+    <div class="uni-grid">
+      <div class="net-box">
+        <div class="net-hint">● 캐릭터를 클릭해 보세요</div>
+        <svg id="netSvg" viewBox="0 0 1000 660" aria-label="이현세 스타 시스템 캐릭터-작품 관계도"></svg>
+      </div>
+      <div class="uni-panel" id="uniPanel">
+        <h3><span class="dot"></span>스타 시스템</h3>
+        <div class="tag">STAR SYSTEM</div>
+        <p>왼쪽 지도에서 붉은 원이 캐릭터, 회색 원이 작품입니다. 하나의 캐릭터가 여러 작품에서 전혀 다른 인생을 사는 구조가
+        이현세 세계관의 뼈대입니다.</p>
+        <p style="color:var(--muted);font-size:12.5px">예 — 오혜성은 「공포의 외인구단」에서 불운의 타자로, 「카론의 새벽」에서는
+        신념 때문에 감옥에 가는 경찰로 살아갑니다.</p>
+        <div class="indie-note"><b>독립 세계관</b> — 순이(며느리 밥풀꽃), 위만(천국의 신화), 성미수(버디), 좌운검(귀천도)은
+        스타 시스템 밖에서 각자의 세계를 이룹니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="timeline" style="background:var(--surface-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Chronicle 1979–2022</div>
+      <div class="sec-title">연보 — 잉크로 그린 47년</div>
+      <p class="sec-desc">연도가 확인된 <b>140편</b>을 시대순으로 펼쳤습니다. 1980년대의 폭발적 다작기,
+      90년대의 성인 극화 전성기, 2000년대 이후의 확장기가 한눈에 보입니다.</p>
+    </div>
+    <div class="tl-chart-box">
+      <h4>연도별 발표 작품 수</h4>
+      <div class="sub">막대에 마우스를 올리면 그 해의 작품이 보입니다 · ★ 대표작 발표 연도</div>
+      <svg id="tlChart" viewBox="0 0 1080 240" style="width:100%;height:auto"></svg>
+    </div>
+    <div class="era-strip" id="eraStrip"></div>
+    <div class="tl-filters" id="tlFilters">
+      <button class="chip on" data-f="all">전체 140편</button>
+      <button class="chip" data-f="star">★ 대표작</button>
+      <button class="chip" data-f="adapted">영상화·확장작</button>
+      <button class="chip" data-f="sports">스포츠물</button>
+    </div>
+    <div id="decades"></div>
+    <div class="tl-legend">
+      <span><span class="lg-star">★</span> 대표작(Tier 0)</span>
+      <span><span class="lg-box" style="background:#1e2430;border:1px solid rgba(57,135,229,.35)"></span> 영상화·2차 확장 이력</span>
+      <span>파란 테두리 칩은 클릭하면 상세 도감으로 연결됩니다</span>
+    </div>
+  </div>
+</section>
+
+<section id="ipmap">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">IP Expansion Map</div>
+      <div class="sec-title">IP 확장 맵 — 만화는 어디까지 갔나</div>
+      <p class="sec-desc">원작 만화에서 출발한 이야기들은 스크린과 브라운관, 극장 애니메이션, 태평양 건너 할리우드,
+      그리고 웹툰 리부트와 AI 리메이크까지 뻗어 나갔습니다. <b>채워진 점은 실현된 확장</b>,
+      점선 원은 공개적으로 알려진 <b>추진·계획</b>입니다.</p>
+    </div>
+    <div class="ip-highlights">
+      <div class="hl" style="--hl-c:var(--c-film)">
+        <div class="k">1986 · 스크린</div>
+        <div class="t">「이장호의 외인구단」</div>
+        <div class="d">그해 한국영화 흥행 1위(28.7만). 주제가 '난 너에게'는 가요톱10 5주 연속 1위 — 만화가 대중문화 전체를 흔든 순간.</div>
+      </div>
+      <div class="hl" style="--hl-c:var(--c-anime)">
+        <div class="k">1987 · 애니메이션</div>
+        <div class="t">「떠돌이 까치」</div>
+        <div class="d">1987년 5월 5일 KBS1 방영, 국산 최초의 TV용 장편 애니메이션. 한국 애니메이션 역사가 이 작품에서 시작됐다.</div>
+      </div>
+      <div class="hl" style="--hl-c:var(--c-overseas)">
+        <div class="k">1998 · 할리우드</div>
+        <div class="t">「The Gardener」</div>
+        <div class="d">「엔젤딕」 2권 '꿈의 화원'이 신상옥 제작·말콤 맥도웰 주연으로 태평양을 건넌 이례적 사례.</div>
+      </div>
+      <div class="hl" style="--hl-c:var(--c-reboot)">
+        <div class="k">2026 · 현재진행형</div>
+        <div class="t">AI 리메이크 &amp; 리부트</div>
+        <div class="d">「카론의 새벽」 AI 리메이크 진행, 「블루엔젤」은 35년 만에 카카오 웹툰으로 리부트 — 확장은 아직 끝나지 않았다.</div>
+      </div>
+    </div>
+    <div class="ip-legend" id="ipLegend"></div>
+    <div class="ip-table-wrap">
+      <table class="ip" id="ipTable"></table>
+    </div>
+  </div>
+</section>
+
+<section id="dex" style="background:var(--surface-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Dossier</div>
+      <div class="sec-title">작품 도감 — 15편의 세계</div>
+      <p class="sec-desc">대표작 7편(★)과 영상화로 검증된 IP 8편. 카드를 누르면 줄거리·인물·확장 계보와
+      <b>"이 작품이 좋았다면"</b> 추천까지 볼 수 있습니다.</p>
+    </div>
+    <div class="dex-grid" id="dexGrid"></div>
+  </div>
+</section>
+
+<section id="moods">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">If You Liked This</div>
+      <div class="sec-title">정서로 잇기 — 이현세 다음에 볼 것</div>
+      <p class="sec-desc">이현세 세계관을 다섯 개의 정서로 나눴습니다. 오늘의 기분에 맞는 입구를 고르고,
+      그 정서가 이어지는 <b>바깥의 콘텐츠</b>로 건너가 보세요. 아카이브는 닫힌 창고가 아니라 열린 지도니까요.</p>
+    </div>
+    <div class="mood-grid" id="moodGrid"></div>
+  </div>
+</section>
+
+
+<section id="plaza" style="background:var(--surface-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Community Plaza · 8월 오픈</div>
+      <div class="sec-title">작품의 광장 — 함께 다시 읽기 <span class="ex-tag">예시 화면</span></div>
+      <p class="sec-desc">모든 작품 도감에 토론방이 열립니다. 매주 하나의 <b>'이번 주의 광장'</b> 토픽이 지정되고,
+      좋은 이야기는 작가의 레터와 아카이브에 이름과 함께 실립니다. 아래는 오픈 후의 모습을 미리 그린 예시입니다.</p>
+    </div>
+    <div class="plaza-grid">
+      <div class="thread">
+        <div class="top-tag">이번 주의 광장 · 공포의 외인구단</div>
+        <h3>2026년의 오혜성을 캐스팅한다면, 누구인가요?</h3>
+        <div class="meta">예시 스레드 · 댓글 24 · 광장은 8월에 열립니다</div>
+        <div style="margin-top:18px">
+          <div class="cmt"><div class="avatar">🐦</div><div><div class="who">까치단_1982 <span>3시간 전 · 예시</span></div>
+            <p>40년을 기다린 질문이네요. 저는 연기로 '불운'을 설명할 수 있는 배우여야 한다고 봅니다. 재능이 없어 보이면 안 되고, 재능이 저주가 된 얼굴이어야 해요.</p>
+            <div class="likes">♥ 18 · 답글 4</div></div></div>
+          <div class="cmt"><div class="avatar">⚾</div><div><div class="who">외인구단7번타자 <span>2시간 전 · 예시</span></div>
+            <p>캐스팅보다 각색이 먼저 아닐까요. 1986년 영화의 마지막을 그대로 갈 수 있는 시대인지부터 광장에서 토론해보고 싶습니다.</p>
+            <div class="likes">♥ 11 · 답글 2</div></div></div>
+          <div class="cmt"><div class="avatar">📖</div><div><div class="who">엄지책방 <span>40분 전 · 예시</span></div>
+            <p>"당신이 최고의 선수가 되면 무엇이든 하겠어요" — 이 대사를 지금의 감수성으로 어떻게 다시 쓸지가 리메이크의 전부라고 생각해요.</p>
+            <div class="likes">♥ 9 · 답글 1</div></div></div>
+        </div>
+        <div class="cmt-input"><input disabled placeholder="광장은 8월에 열립니다 — 창립 멤버로 함께해 주세요"><button disabled>등록</button></div>
+      </div>
+      <div class="topic-stack">
+        <div style="font-size:12px;letter-spacing:.2em;color:var(--muted);font-weight:700;margin-bottom:2px">대기 중인 시드 토픽 · 예시</div>
+        <div class="topic" onclick="openModal('W027')"><div class="t"><b>"링은 나에게 지옥이었다"</b><span>지옥의 링 · 이 마지막 대사를 처음 읽었을 때</span></div><div class="n">오픈 예정</div></div>
+        <div class="topic" onclick="openModal('W064')"><div class="t"><b>아마게돈 리부트, 애니 vs 실사</b><span>아마게돈 · 어느 쪽이어야 할까</span></div><div class="n">오픈 예정</div></div>
+        <div class="topic" onclick="openModal('W066')"><div class="t"><b>테러리스트 먼저? 원작 먼저?</b><span>카론의 새벽 · 당신의 입장 순서</span></div><div class="n">오픈 예정</div></div>
+        <div class="topic" onclick="openModal('W031')"><div class="t"><b>1987년 5월 5일의 기억</b><span>떠돌이 까치 · 그날 TV 앞에 있던 사람들</span></div><div class="n">오픈 예정</div></div>
+        <div class="topic" onclick="openModal('W111')"><div class="t"><b>치우천왕에서 가장 좋아하는 장</b><span>천국의 신화 · 47권의 지도 그리기</span></div><div class="n">오픈 예정</div></div>
+        <div class="topic" onclick="openModal('W120')"><div class="t"><b>성미수의 스윙을 다시 본다면</b><span>버디 · 골프 붐의 시대에 다시 읽기</span></div><div class="n">오픈 예정</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="letter">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Author's Letter · 격주 발행</div>
+      <div class="sec-title">작가의 레터 — 이현세가 직접 부치는 이야기</div>
+      <p class="sec-desc">창작 비화, 그 시절의 회고, 그리고 지금 AI와 함께 그리는 새 작업까지.
+      격주로 도착하고, 지난 레터는 이곳에 차곡차곡 쌓여 <b>또 하나의 아카이브</b>가 됩니다.</p>
+    </div>
+    <div class="sub-box">
+      <div class="tx"><b>창간호를 가장 먼저 받아보세요</b><div>8월 첫째 주, 독점 연재가 끝나는 날 도착합니다</div></div>
+      <div class="sub-form"><input id="subInput" type="email" placeholder="이메일 주소"><button onclick="mockSub()">구독 신청</button>
+      <div class="sub-msg" id="subMsg">프로토타입입니다 — 실제 구독은 8월 창간과 함께 열립니다. 감사합니다! 🏕️</div></div>
+    </div>
+    <div class="letter-grid">
+      <div class="letter-card"><div class="no">LETTER 01 · 예정<span class="ex-tag">예시</span></div>
+        <h3>다시, 까치 — 44년 만의 인사</h3>
+        <p>1982년 외인구단의 첫 원고를 그리던 밤과, 독점 연재가 끝난 오늘 사이의 이야기. 왜 지금 광장을 여는가.</p>
+        <div class="d">8월 1주 발행 예정</div></div>
+      <div class="letter-card"><div class="no">LETTER 02 · 예정<span class="ex-tag">예시</span></div>
+        <h3>AI와 함께 카론의 새벽을 다시 그리며</h3>
+        <p>38년 전의 오혜성을 AI와 함께 다시 깨우는 작업 일지. 달라진 것과 달라지지 않아야 하는 것.</p>
+        <div class="d">8월 3주 발행 예정</div></div>
+      <div class="letter-card"><div class="no">LETTER 03 · 예정<span class="ex-tag">예시</span></div>
+        <h3>같은 얼굴을 다시 쓰는 이유</h3>
+        <p>스타 시스템의 기원 — 오혜성과 엄지와 마동탁은 왜 작품마다 돌아오는가. 독자들이 가장 많이 물어온 질문에 답합니다.</p>
+        <div class="d">9월 1주 발행 예정</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="library" style="background:var(--surface-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Shelf of Inspirations</div>
+      <div class="sec-title">영감의 서재 — 작품 곁에 있던 것들</div>
+      <p class="sec-desc">작품마다 두 개의 서가가 놓입니다. <b>작가의 서가</b>에는 그릴 때 곁에 있었던 책과 영화가
+      (작가 인터뷰로 확인된 것만) 꽂히고, <b>독자의 서가</b>에는 여러분이 이 작품에서 떠올린 콘텐츠가 쌓입니다.
+      채택된 연상은 아카이브에 닉네임과 함께 남습니다.</p>
+    </div>
+    <div class="lib-grid">
+      <div class="lib-card"><h3>공포의 외인구단 <span>1982</span></h3>
+        <h6>작가의 서가</h6>
+        <div class="shelf-slot">🕯️ 8월 작가 인터뷰로 채워질 자리입니다 — "외인구단을 그리던 시절, 곁에 있던 것들"</div>
+        <h6>독자의 서가 · 예시</h6>
+        <div class="assoc">
+          <div class="a"><b>몽테크리스토 백작</b> <span>— 버림받은 자의 단련과 귀환이라는 원형</span><span class="by">독자 연상 예시 · 까치단_1982</span></div>
+          <div class="a"><b>록키</b> <span>— 밑바닥에서 링(그라운드)에 오르는 몸의 서사</span><span class="by">독자 연상 예시 · 외인구단7번타자</span></div>
+        </div></div>
+      <div class="lib-card"><h3>아마게돈 <span>1988</span></h3>
+        <h6>작가의 서가</h6>
+        <div class="shelf-slot">🕯️ 8월 작가 인터뷰로 채워질 자리입니다 — "1988년, SF를 그리게 만든 것들"</div>
+        <h6>독자의 서가 · 예시</h6>
+        <div class="assoc">
+          <div class="a"><b>코스모스 (칼 세이건)</b> <span>— 45억 년의 시간 감각과 우주적 상상력</span><span class="by">독자 연상 예시 · 델타8988</span></div>
+          <div class="a"><b>아키라</b> <span>— 같은 시대, 다른 대륙의 묵시록</span><span class="by">독자 연상 예시 · 판도라009</span></div>
+        </div></div>
+      <div class="lib-card"><h3>카론의 새벽 <span>1988</span></h3>
+        <h6>작가의 서가</h6>
+        <div class="shelf-slot">🕯️ 8월 작가 인터뷰로 채워질 자리입니다 — "하드보일드의 뿌리"</div>
+        <h6>독자의 서가 · 예시</h6>
+        <div class="assoc">
+          <div class="a"><b>대부</b> <span>— 조직의 어둠과 형제 서사의 원형</span><span class="by">독자 연상 예시 · 오영웅의형</span></div>
+          <div class="a"><b>영웅본색</b> <span>— 같은 88년, 홍콩 느와르와의 공명</span><span class="by">독자 연상 예시 · 새벽의카론</span></div>
+        </div></div>
+    </div>
+    <p style="margin-top:18px;font-size:12.5px;color:var(--muted)">※ 작가의 서가는 본인 확인을 거친 코멘터리만 게재합니다. 독자의 서가 항목은 프로토타입용 예시입니다.</p>
+  </div>
+</section>
+
+<section id="global">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Beyond Korea</div>
+      <div class="sec-title">해외의 시선 — 바깥에서 읽힌 이현세</div>
+      <p class="sec-desc">이현세의 세계는 이미 여러 번 국경을 건넜습니다. 아카이브에서 확인된 기록에서 출발해,
+      해외 기사·연구·리뷰를 번역해 소개하는 섹션으로 키워갑니다.</p>
+    </div>
+    <div class="global-grid">
+      <div class="gcard"><div class="flag">🇺🇸</div><div class="k">1998 · 할리우드</div>
+        <h3>The Gardener</h3><p>「엔젤딕」 2권 '꿈의 화원'이 신상옥(Simon S. Sheen) 제작, 말콤 맥도웰 주연의 할리우드 영화로 — 한국 만화 IP가 태평양을 건넌 초기 기록.</p></div>
+      <div class="gcard"><div class="flag">🇫🇷</div><div class="k">1995 · 국제영화제</div>
+        <h3>「테러리스트」 발렌시엔느 초청</h3><p>「카론의 새벽」이 원작인 영화가 프랑스 발렌시엔느 국제영화제에 초청되고 KINO 베스트10에 선정 — 스크린으로 건너간 하드보일드.</p></div>
+      <div class="gcard"><div class="flag">🇨🇳</div><div class="k">2011 · 드라마 수출</div>
+        <h3>「버디버디」 중국 방영</h3><p>국내 시청률과 달리 중국 수출 시장에서 좋은 평가를 받은 기록 — 골프 성장 서사의 해외 소구를 보여준 사례.</p></div>
+      <div class="gcard"><div class="flag">🇹🇼</div><div class="k">1995–97 · 번역 출판</div>
+        <h3>대만판 단행본들</h3><p>「아마게돈」 「남벌」 「뽕짝」의 대만판 출간 기록(1995–97) — 90년대 중화권으로 번역된 이현세.</p></div>
+      <div class="gcard"><div class="flag">🇺🇸</div><div class="k">2023 · 40주년 평론</div>
+        <h3>The Comics Journal</h3><p>미국의 권위지 TCJ가 외인구단 40주년에 장문 평론 게재 — "1980년대의 한국을 이만큼 압축해 보여주는 픽션은 없다." 국내엔 거의 소개되지 않은 글.</p>
+        <a class="glink" href="https://www.tcj.com/the-untouchable-aliens-of-south-korean-comics/" target="_blank" rel="noopener">원문 보기 →</a></div>
+      <div class="gcard"><div class="flag">🇺🇸</div><div class="k">2025 · 테크 저널리즘</div>
+        <h3>MIT Technology Review</h3><p>한국 웹툰 산업의 AI 전환 기획에서 이현세를 '전설(legendary)'로 소개 — 5,000권을 학습한 AI 모델과 카론의 새벽 리메이크를 상세 보도.</p>
+        <a class="glink" href="https://www.technologyreview.com/2025/04/22/1114874/generative-ai-south-korea-webcomics/" target="_blank" rel="noopener">원문 보기 →</a></div>
+      <div class="gcard"><div class="flag">🇫🇷</div><div class="k">1996 · 유럽 최초</div>
+        <h3>프랑스어권 최초의 한국 만화</h3><p>「엔젤딕」 「아마게돈」이 1996년 카나(Kana)에서 출간 — 한국문화원 자료가 확인한 "프랑스어권에 번역된 최초의 한국 만화". 웹툰 한류보다 사반세기 앞선 최초 시도.</p>
+        <a class="glink" href="https://www.coree-culture.org/bd-coreenne-en-france-etat-des,4999.html" target="_blank" rel="noopener">근거 자료 보기 →</a></div>
+      <div class="gcard"><div class="flag">🇺🇸</div><div class="k">2026 · 리부트 보도</div>
+        <h3>Anime News Network</h3><p>블루엔젤 리부트를 영어권 팬덤에 실시간 보도 — "한국에서 가장 영향력 있는 만화가 중 한 명". 원작은 이미 2004년 「Hard Boiled Angel」로 미국 출간된 바 있다.</p>
+        <a class="glink" href="https://www.animenewsnetwork.com/news/2026-02-12/blue-angel-manhwa-revived-after-35-years-with-new-webtoon-sequel/.234075" target="_blank" rel="noopener">원문 보기 →</a></div>
+      <div class="gcard pending"><div class="flag">🔭</div><div class="k">수집 중</div>
+        <h3>해외 연구·리뷰 번역</h3><p>해외 만화 연구 문헌과 K-comics 담론 속 이현세 언급을 수집·번역해 이 자리에 쌓아갑니다. 제보도 광장에서 받습니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div><b>HS<em>CAMP</em></b> — 이현세 작품세계 아카이브 프로젝트<br>아카이브 · IP · AI 재소개</div>
+      <div style="text-align:right">데이터 기준: 2026.07 아카이브 마스터(237편) · 도시에 15편<br>일부 서지·연도는 계속 보완 중입니다</div>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-bg" id="modalBg"><div class="modal" id="modalBox"></div></div>
+<div id="tlTip"></div>
+
+<script>
+/* ============ 데이터 ============ */
+const MEDIA = {
+  film:     {label:'영화',        color:'var(--c-film)',     hex:'#3987e5'},
+  drama:    {label:'드라마',      color:'var(--c-drama)',    hex:'#008300'},
+  anime:    {label:'애니메이션',  color:'var(--c-anime)',    hex:'#d55181'},
+  overseas: {label:'해외 진출',   color:'var(--c-overseas)', hex:'#c98500'},
+  game:     {label:'게임·웹3',color:'var(--c-game)',    hex:'#199e70'},
+  reboot:   {label:'리부트·AI',   color:'var(--c-reboot)',   hex:'#d95926'}
+};
+
+const WORKS = {
+  W014:{id:'W014',title:'공포의 외인구단',year:1982,tier:0,genre:'야구 · 비극 멜로',credits:'그림 이현세 · 스토리 김민기',
+    log:'버림받은 낙오자들이 지옥훈련 끝에 다시 그라운드에 서고, 오혜성의 순애보는 파국으로 치닫는다.',
+    syn:'재능은 있으나 불운한 야구선수 오혜성(까치)은 어릴 적부터 엄지를 짝사랑하지만, 엄지는 엘리트 마동탁에게 기운다. 프로에서 좌절한 오혜성은 낙오 선수들을 모은 \'외인구단\'에 합류해 외딴섬 지옥훈련을 견디고 공포의 타자로 부활한다. "당신이 최고의 선수가 되면 무엇이든 하겠다"는 엄지의 말을 붙든 채, 사랑과 승부가 얽힌 파멸적 결말로 질주하는 1980년대 한국 만화의 아이콘.',
+    chars:[['오혜성(까치)','불운하지만 집념의 타자'],['엄지','삼각관계의 중심'],['마동탁','재능과 환경을 갖춘 라이벌'],['손병호','지옥훈련의 감독']],
+    exp:[
+      {t:'film',y:1986,title:'영화 「이장호의 외인구단」',note:'최재성·이보희·안성기 — 그해 한국영화 흥행 1위(28.7만), 주제가 \'난 너에게\' 가요톱10 5주 1위'},
+      {t:'film',y:1988,title:'영화 「이장호의 외인구단 2」',note:'최재성 재출연, 안성기 특별출연'},
+      {t:'drama',y:2009,title:'MBC 「2009 외인구단」',note:'윤태영·김민정 주연, 16부작'},
+      {t:'game',y:2022,title:'40주년 원화 NFT·웹3 프로젝트',note:'원화 NFT 에디션 발행, 게임 콜라보 추진'},
+      {t:'anime',y:2023,title:'애니메이션',note:'40주년 사업의 일환으로 기획·계획 발표',plan:true}
+    ],
+    reco:{next:'W027',ext:[['슬램덩크','승부 뒤에 순정이 있는 라이벌 서사의 원형을 잇는다'],['스토브리그','밑바닥 팀을 다시 세우는 야구 드라마의 쾌감'],['주먹이 운다','벼랑 끝에서 몸을 던지는 승부의 정서']]}},
+  W027:{id:'W027',title:'지옥의 링',year:1983,tier:1,genre:'복싱 · 스포츠 비극',credits:'그림 이현세 · 스토리 김민기',
+    log:'재능 없는 청년이 오직 사랑을 증명하기 위해 지옥 같은 링에 몸을 던진다.',
+    syn:'보육원에서 함께 자란 까치와 엄지. 양부모를 만나 떠난 엄지의 마음을 되돌리려, 까치는 소질도 없는 복싱을 시작한다. 챔피언 후보의 스파링 파트너로 매일 얻어맞으면서도 집념 하나로 링을 버텨내는 이야기 — \'재능 각성\'이라는 스포츠 만화의 공식을 뒤집고, 마지막에 남는 것은 "링은 나에게 지옥이었다"는 고백이다.',
+    chars:[['오혜성(까치)','소질 없는 복서'],['엄지','성공을 좇아 떠난 첫사랑'],['두산','보육원 동기']],
+    exp:[{t:'film',y:1987,title:'영화 「지옥의 링」',note:'장영일 감독, 조상구 주연 — 최성수 \'동행\'이 삽입곡으로 널리 알려짐'}],
+    reco:{next:'W014',ext:[['록키','언더독이 링 위에서 존재를 증명하는 이야기의 고전'],['주먹이 운다','패배자들의 복싱이 주는 처절한 감정'],['더 파이팅','링 위의 성장과 집념을 잇는 만화']]}},
+  W031:{id:'W031',title:'떠돌이 까치',year:1984,tier:1,genre:'야구 · 소년 성장',credits:'이현세',
+    log:'전국을 떠돌던 외로운 소년이 야구로 자리를 찾고, 가족과 화해한다.',
+    syn:'트럭 운전수 아버지를 따라 이 학교 저 학교를 떠돌던 설까치. 서울 해동중학교로 전학 온 첫날부터 사고뭉치지만, 그가 던진 공이 야구부 주장 마동탁의 눈에 띈다. 어려운 환경에도 꿈을 잃지 않는 까치는 팀을 서울시 예선 우승으로 이끌고, 아버지의 재혼으로 생긴 새어머니와도 마침내 화해한다. 1987년 어린이날, 이 작품은 국산 최초의 TV용 장편 애니메이션이 되었다.',
+    chars:[['설까치','떠돌이 소년, 야구부 입부'],['설대포','트럭 운전수 아버지'],['마동탁','야구부 주장, 선의의 라이벌'],['엄지','육상부 여학생'],['백두산','야구부 동료']],
+    exp:[{t:'anime',y:1987,title:'KBS1 TV 애니메이션',note:'1987.5.5 어린이날 첫 방영, 84분 — 국산 최초의 TV용 장편 애니메이션. 「둘리」보다 5개월 앞섰다'}],
+    reco:{next:'W051',ext:[['아기공룡 둘리','같은 1987년에 태어난 국산 TV 애니의 형제'],['H2','야구와 소년의 마음을 그리는 서정의 정석'],['날아라 슈퍼보드 세대의 레트로 애니 탐방','80~90년대 국산 애니 계보 여행']]}},
+  W051:{id:'W051',title:'까치의 날개',year:1987,tier:1,genre:'야구 · 재기 드라마',credits:'이현세',
+    log:'모든 것을 잃은 소년이 날개 다친 아기 까치를 돌보며 다시 일어선다.',
+    syn:'누나를 잃고 아버지마저 곁을 떠난 설까치는 야구에 매달리며 버틴다. 다쳐서 날지 못하는 아기 까치 \'까순이\'를 동생처럼 거두는데, 까순이가 병과 부상을 이기고 마침내 하늘을 나는 순간이 곧 제목의 은유다. 라이벌 마동탁과 겨루며 결승 국면에서 에이스로 등판하는 재기의 드라마.',
+    chars:[['설까치','다시 일어서는 소년'],['까순이','날개 다친 아기 까치, 작품의 상징'],['마동탁','숙명의 라이벌'],['은주 누나','까치를 보살피는 보호자']],
+    exp:[{t:'anime',y:1988,title:'KBS TV 애니메이션',note:'대원동화 제작, 1988 첫 방영 후 1995~96 재편성'}],
+    reco:{next:'W031',ext:[['터치','상실 후에도 계속되는 야구와 성장'],['윈드브레이커','소년이 페달을 밟듯 다시 앞으로 나아가는 이야기']]}},
+  W053:{id:'W053',title:'사자여 새벽을 노래하라',year:1987,tier:0,genre:'역사 대하 · 태평양전쟁',credits:'이현세',
+    log:'항일을 꿈꾸던 조선인 유학생이 천황의 군인이 되어 버마전선으로 끌려간다.',
+    syn:'일제 말, 징병을 거부한 유학생 오혜성은 도망자가 되어 항일 게릴라를 꿈꾸지만 운명은 그를 학병으로 만들어 격전지 버마전선에 던진다. 차별과 억압 속에 동료를 잃으며, 살아서 고향에 돌아가기 위한 처절한 사투가 이어진다. 역사에 기록되지 않은 조선인 학병들의 이야기 — 평단이 꼽는 이현세의 숨은 걸작.',
+    chars:[['오혜성','버마전선에 던져진 학병'],['김명주','오혜성을 사랑하는 여인'],['백두산','함께 끌려간 동료'],['고바야시 하라','경성에서 명주를 찾는 일본군 소위']],
+    exp:[{t:'film',y:2006,title:'영화화 추진',note:'2000년대 영화화가 추진된 바 있는 미개척 대작',plan:true}],
+    reco:{next:'W094',ext:[['밀정','일제강점기, 신념과 생존 사이의 인간들'],['파친코','역사에 휩쓸린 조선인들의 생애 대하극'],['태백산맥','한국 현대사를 정면으로 통과하는 대하 서사']]}},
+  W061:{id:'W061',title:'며느리 밥풀꽃에 대한 보고서',year:1988,tier:0,genre:'사회고발 리얼리즘',credits:'이현세',
+    log:'여자라는 이유만으로 밑바닥에 내몰린 순이의 삶이 전설과 겹치며 비극으로 수렴한다.',
+    syn:'부엌에서 밥풀을 맛보다 내쫓겨 얼어 죽은 며느리 자리에 밥풀 모양 꽃이 피었다는 전설을 액자로, 1970~80년대 한국 사회가 한 여성을 어떻게 부조리의 수렁으로 밀어 넣는지를 치밀한 취재로 그린 문제작. "1980년대 이후 한국 만화의 질적 도약을 상징하는 작품"이라는 평가를 받는다.',
+    chars:[['순이','사회의 밑바닥으로 내몰린 여성'],['창수','철저한 악인인 대학생 애인'],['박제룡','이루어질 수 없는 사랑, 형사'],['명호','순박한 사랑']],
+    exp:[
+      {t:'film',y:1989,title:'영화 「며느리밥풀꽃에 대한 보고서」',note:'류재무 감독, 나영희·천호진 주연'},
+      {t:'overseas',y:1990,title:'일본 번역판 『순희(純姬)』',note:'일본어권 번역 출판'}],
+    reco:{next:'W053',ext:[['82년생 김지영','구조가 여성의 삶을 짓누르는 방식에 대한 동시대의 보고서'],['미쓰백','사회의 사각지대에서 서로를 알아보는 사람들'],['소년심판','부조리를 정면으로 응시하는 사회고발 드라마']]}},
+  W064:{id:'W064',title:'아마게돈',year:1988,tier:0,genre:'SF · 종말 전쟁',credits:'그림 이현세 · 글 야설록',
+    log:'평범한 고교생이 초고대 조직에 이끌려 미래로 건너가, 인류 최후의 전쟁에 선다.',
+    syn:'안드로메다의 고도문명이 지구에 떨어뜨린 초자아 컴퓨터 \'델타8988\'이 지구 생명을 빚었다. 1987년의 고교생 오혜성은 미래의 최후 전쟁을 꿈으로 반복해서 본다. 전학생 장마리가 실은 초고대 조직 \'엘카\'의 서열 9위 판도라임이 드러나고, 오혜성은 22세기로 건너가 초인 전사로 각성해 외계 군단 \'이드\'와의 최후 전쟁 \'아마게돈\'의 중심에 선다. 한국 만화가 그린 가장 큰 스케일의 묵시록.',
+    chars:[['오혜성','인류 진화의 비밀을 품은 각성자'],['장마리 / 판도라','엘카 서열 9위, 여왕 자리를 포기한 사랑'],['델타8988','지구 생명을 창조한 초자아 컴퓨터'],['이드','지구를 침공하는 외계 군단']],
+    exp:[
+      {t:'anime',y:1996,title:'극장판 애니메이션 「아마게돈」',note:'이현세 총감독 — 국내 최초 제작위원회 방식, 성우 이병헌·최불암. 흥행은 실패했지만 한국 극장 애니 산업사의 이정표'},
+      {t:'game',y:1996,title:'게임화 시도',note:'여러 장르로 시도된 기록',plan:true}],
+    reco:{next:'W111',ext:[['아키라','한 세대를 삼킨 묵시록 SF의 좌표'],['에반게리온','소년의 각성과 종말 서사의 결정판'],['기생수','인간이란 무엇인가를 묻는 침공 SF']]}},
+  W066:{id:'W066',title:'카론의 새벽',year:1988,tier:1,genre:'하드보일드 느와르',credits:'이현세',
+    log:'신념을 지키려 스스로 죄인이 된 경찰이, 사회를 조종하는 거대한 어둠에 맨몸으로 맞선다.',
+    syn:'정의감 강한 경찰 오혜성은 법의 테두리를 넘어 폭력배를 직접 단죄하고 그 대가로 수감된다. 옥중에서 단련한 그는 사회를 배후에서 조종하는 거대 범죄조직의 실체를 알게 되고, 형제 오영웅과 함께 정면으로 맞선다. 성형을 통한 신분 세탁, 비행기 납치 — 당시 한국 만화로는 이례적인 할리우드급 스케일의 하드보일드. 1995년 영화 「테러리스트」로 다시 태어나 최민수에게 남우주연상 2관왕을 안겼다.',
+    chars:[['오혜성','신념 때문에 감옥에 간 경찰'],['오영웅','형제 서사의 다른 축'],['조직의 보스','사회를 배후 조종하는 어둠']],
+    exp:[
+      {t:'film',y:1995,title:'영화 「테러리스트」',note:'김영빈 감독, 최민수·이경영·염정아 — 청룡·대종상 남우주연상(최민수), 청룡 남우조연상(허준호). 국제영화제 초청작'},
+      {t:'reboot',y:2026,title:'이현세 AI 리메이크',note:'작가 본인이 AI를 활용해 현대적으로 리메이크 진행 중(공개 예정 보도)',plan:true}],
+    reco:{next:'W091',ext:[['무뢰한','부서진 경찰의 하드보일드 정서를 잇는 느와르'],['아저씨','한 사람을 지키기 위해 어둠으로 걸어 들어가는 액션'],['범죄도시','악을 힘으로 소탕하는 카타르시스']]}},
+  W071:{id:'W071',title:'블루엔젤',year:1989,tier:1,genre:'경찰 극화 · 하지란 시리즈',credits:'이현세',
+    log:'강력계 여형사 하지란, 한국 만화에서 가장 강렬한 여형사의 첫 등장.',
+    syn:'스포츠신문 연재로 태어난 강력계 여형사 하지란의 첫 이야기. 사회의 어두운 심연에서 벌어지는 강력범죄를 정면으로 소탕하는 카리스마형 여주인공은 이후 「엔젤딕」으로 스케일을 키웠고, 35년이 지난 2026년 카카오 웹툰 「블루엔젤 리부트」로 되살아나 공개 첫날 액션 랭킹 4위에 올랐다.',
+    chars:[['하지란','강력계 여형사, 시리즈의 심장']],
+    exp:[{t:'reboot',y:2026,title:'웹툰 「블루엔젤 리부트」',note:'2026.2 카카오페이지·카카오웹툰 — 35년 만의 리메이크, 공개 첫날 액션 랭킹 4위'}],
+    reco:{next:'W084',ext:[['시그널','시대를 건너 범죄를 쫓는 형사들의 온도'],['마인드헌터','범죄의 심연을 들여다보는 수사물의 깊이']]}},
+  W084:{id:'W084',title:'엔젤딕',year:1992,tier:1,genre:'여형사 옴니버스 스릴러',credits:'이현세',
+    log:'여형사 하지란이 사회의 가장 병적인 심연과 정면으로 맞붙는 옴니버스 하드보일드.',
+    syn:'「블루엔젤」의 하지란 경위가 돌아왔다. 생체실험을 벌이는 과학자들, 인육을 먹는 연쇄살인마, 전쟁이 남긴 광기 — 각 권이 독립된 사건으로 이루어진 환상특급식 옴니버스. 그중 2권 \'꿈의 화원\'은 신상옥 제작, 말콤 맥도웰 주연의 할리우드 영화 「The Gardener」(1998)로 만들어져, 한국 만화 IP가 태평양을 건넌 희귀한 기록을 남겼다.',
+    chars:[['하지란','"개같은 천사" — 강력계 여형사'],['에피소드별 빌런','생체실험 과학자, 연쇄살인마, 광기의 참전용사']],
+    exp:[{t:'overseas',y:1998,title:'할리우드 「The Gardener」',note:'신상옥(Simon S. Sheen) 제작, 말콤 맥도웰 주연 — 2권 \'꿈의 화원\' 기반'}],
+    reco:{next:'W071',ext:[['악의 마음을 읽는 자들','연쇄살인의 심리를 추적하는 수사극'],['환상특급','옴니버스 미스터리라는 형식의 원형']]}},
+  W091:{id:'W091',title:'폴리스',year:1993,tier:0,genre:'경찰 vs 검사 누아르',credits:'이현세',
+    log:'사법고시를 버리고 경찰이 된 남자와, 조폭의 돈으로 검사가 된 남자의 정의를 건 전쟁.',
+    syn:'경찰대 출신 엘리트 오혜성은 사법고시 차석의 길을 버리고 일선 경찰을 택한다. 맞은편에는 조직폭력 배경의 재력으로 서울지검 강력부 검사가 된 마동탁. 현장의 정의와 권력의 법이 정면충돌하는 이 구도는 오늘의 K-드라마가 여전히 반복하는 질문이다. 1994년 KBS2 드라마로 만들어져 신인 이병헌이 오혜성을 연기했다.',
+    chars:[['오혜성','신념의 경찰'],['마동탁','야망의 검사'],['최엄지·송채연·홍미란','갈등을 증폭시키는 감정선']],
+    exp:[{t:'drama',y:1994,title:'KBS2 드라마 「폴리스」',note:'16부작 — 이병헌(오혜성)·독고영재·엄정화 출연. 주제가 \'내가 선택한 길\'(김형석 작곡)'}],
+    reco:{next:'W066',ext:[['내부자들','법과 권력의 카르텔을 정조준하는 누아르'],['비트','90년대 청춘 누아르의 공기'],['비질란테','법 밖의 정의라는 질문을 잇는 웹툰']]}},
+  W094:{id:'W094',title:'남벌',year:1994,tier:0,genre:'가상 전쟁 스릴러',credits:'그림 이현세 · 글 야설록',
+    log:'석유 위기 속 인질이 된 자국민을 구하기 위해, 한국이 전면전을 각오하고 남쪽으로 향한다.',
+    syn:'세계적 석유 파동 속 일본이 인도네시아 해역에 괴뢰국을 세우고, 그 과정에서 한국인 근로자 2천 명이 인질로 잡힌다. 한국 정부는 구출작전 \'남벌\'을 감행하고 국지전은 전면전으로 번진다. 1990년대 신문 연재 당시 하루 판매량이 회자될 만큼 폭발적이었던 화제작 — 시대의 정서를 그대로 봉인한 문제적 대하극이다.',
+    chars:[['오혜성','재일교포 주인공'],['최엄지','재일교포 여성'],['백두산','안기부 요원']],
+    exp:[
+      {t:'film',y:2007,title:'영화화 추진',note:'2007년 판권 계약, 제작비 200억 규모 기획 발표까지 진행',plan:true},
+      {t:'drama',y:2000,title:'드라마화 기획',note:'이병헌 주연·엔니오 모리코네 음악 기획이 거론된 바 있음',plan:true}],
+    reco:{next:'W053',ext:[['강철비','한반도 가상 전쟁 시나리오의 현재형'],['스틸레인','지정학 스릴러 웹툰의 계보'],['킹덤 오브 워 계열 밀리터리 서사','대규모 전쟁 스릴러의 스케일']]}},
+  W108:{id:'W108',title:'귀천도',year:1997,tier:1,genre:'무협 판타지 · 타임슬립',credits:'이현세 (영화 원작의 코믹스판)',
+    log:'1800년 조선의 여인이 시간의 문을 건너 1975년에 도착하고, 두 호위무사의 혈전이 시작된다.',
+    syn:'정조 재위 마지막 해, 왕은 나라의 미래를 품은 여인 청연을 왕가비전 \'시간의 문\'으로 175년 뒤에 피신시킨다. 호위무사 좌운검·우운검은 그녀를 노리는 일본 세력과 시공을 넘나들며 맞선다. 특이하게도 이 작품은 이경영 감독·각본·주연의 영화(1996, 그해 흥행 4위)가 먼저고, 이현세의 만화가 그 코믹스판 — 확장이 거꾸로 흐른 희귀 사례다.',
+    chars:[['좌운검','청연을 지키는 호위무사'],['우운검','또 한 명의 호위무사'],['청연','정조의 아이를 품은 여인'],['간죠','추격하는 일본 세력']],
+    exp:[{t:'film',y:1996,title:'영화 「귀천도」 (원작)',note:'이경영 감독 데뷔작 — 관객 20만, 1996년 한국영화 흥행 4위. 만화가 영화의 코믹스판인 역방향 사례',rev:true}],
+    reco:{next:'W111',ext:[['신의','시간을 건너는 사극 판타지의 계보'],['환혼','무협과 판타지가 섞인 세계관의 현재형']]}},
+  W111:{id:'W111',title:'천국의 신화',year:1997,tier:0,genre:'상고사 대하 판타지',credits:'이현세',
+    log:'창세신화에서 고조선까지 — 잊힌 상고사를 웅대한 서사로 복원하는 필생의 대하물.',
+    syn:'태고의 창세신화에서 출발해 배달국과 치우천왕의 시대, 단군조선 건국, 위만조선까지 이어지는 대하 역사 판타지. 인쇄본 47권, 이후 네이버웹툰에서 풀컬러로 재연재되며 신작 6부 \'봉황의 날개\'로 이어졌다. 연재 초기 \'음란물\' 시비로 기소되었으나 2003년 대법원에서 무죄가 확정 — 한국 만화 표현의 자유 역사에 남은 승리의 기록이기도 하다.',
+    chars:[['치우천왕','배달국 시대의 중심'],['단군','조선 건국의 서사'],['위만','포로로 끌려간 자로 재해석된 6부 주인공']],
+    exp:[{t:'reboot',y:2015,title:'네이버웹툰 재연재 + 신작 6부',note:'구작 47권 디지털 재편 + 풀컬러 신작 \'봉황의 날개\' 연재'}],
+    hist:'⚖️ 1998년 기소 → 2003년 1월 대법원 무죄 확정. 이 재판 과정에서 \'불량만화\' 조항에 헌법재판소 위헌결정(2002)이 내려졌다 — 한국 만화 검열사의 분기점.',
+    reco:{next:'W064',ext:[['신과함께','한국 신화 세계관 확장의 성공 사례'],['아스달 연대기','상고시대를 무대로 한 대하 판타지'],['도올의 한국사 강의','상고사를 보는 다양한 시선']]}},
+  W120:{id:'W120',title:'버디',year:2007,tier:1,genre:'골프 · 성장 드라마',credits:'글 최성현 · 그림 이현세',
+    log:'가난에서 벗어날 유일한 희망으로 골프에 전부를 건 소녀, 필드 위의 성장기.',
+    syn:'골프로 가족을 행복하게 만들겠다는 꿈을 가진 성미수는 절박함을 무기로 프로의 세계에 도전한다. 재벌가에서 자란 천재형 골퍼 윤해령은 미수의 라이벌이자 거울. 국내 최초의 본격 골프 만화로 2007 대한민국 만화대상 대통령상을 받았고, 2011년 tvN 드라마 「버디버디」(유이·이다희)로 만들어졌다.',
+    chars:[['성미수','밑바닥에서 올라온 노력형'],['윤해령','천재형이지만 불안정한 라이벌']],
+    exp:[{t:'drama',y:2011,title:'tvN 드라마 「버디버디」',note:'24부작 100% 사전제작, 유이·이다희 주연. 중국 수출 이력'}],
+    reco:{next:'W031',ext:[['라켓소년단','스포츠와 성장이 만나는 따뜻한 온도'],['가비지타임','밑바닥 팀의 성장을 그리는 스포츠 웹툰'],['세리머니 클럽','골프 코스 위의 관계와 승부']]}}
+};
+
+const ORDER = ['W014','W027','W031','W051','W053','W061','W064','W066','W071','W084','W091','W094','W108','W111','W120'];
+
+/* 스타 시스템 네트워크 */
+const CHARS = [
+  {id:'ohs', name:'오혜성', sub:'까치 · 페르소나', x:420, y:330, r:34},
+  {id:'umji',name:'엄지',   sub:'영원한 그녀',     x:660, y:300, r:26},
+  {id:'mdt', name:'마동탁', sub:'숙명의 라이벌',   x:585, y:485, r:26},
+  {id:'bds', name:'백두산', sub:'듬직한 동료',     x:330, y:535, r:24},
+  {id:'skc', name:'설까치', sub:'소년 까치',       x:800, y:130, r:26},
+  {id:'hjr', name:'하지란', sub:'강력계 여형사',   x:135, y:150, r:26}
+];
+const NWORKS = [
+  {id:'W014', x:545, y:160}, {id:'W027', x:395, y:130}, {id:'W053', x:195, y:340},
+  {id:'W064', x:245, y:225}, {id:'W091', x:730, y:430}, {id:'W094', x:475, y:600},
+  {id:'W066', x:255, y:455}, {id:'W031', x:855, y:300}, {id:'W051', x:920, y:170},
+  {id:'W071', x:90,  y:280}, {id:'W084', x:255, y:80}
+];
+const EDGES = [
+  ['ohs','W014','불운의 천재 타자'],['ohs','W027','소질 없는 복서'],['ohs','W053','버마전선의 학병'],
+  ['ohs','W064','각성한 초인 전사'],['ohs','W091','신념의 경찰'],['ohs','W094','재일교포'],['ohs','W066','단죄하는 경찰'],
+  ['umji','W014','삼각관계의 중심'],['umji','W027','떠나간 첫사랑'],['umji','W091','감정선의 축'],
+  ['umji','W094','재일교포 여성'],['umji','W031','육상부 여학생'],['umji','W051','여주인공'],
+  ['mdt','W014','엘리트 라이벌'],['mdt','W091','야망의 검사'],['mdt','W031','야구부 주장'],['mdt','W051','숙명의 라이벌'],
+  ['bds','W053','버마전선의 동료'],['bds','W094','안기부 요원'],['bds','W031','야구부 동료'],
+  ['skc','W031','떠돌이 소년'],['skc','W051','다시 나는 소년'],
+  ['hjr','W071','여형사의 탄생'],['hjr','W084','스케일의 확장']
+];
+
+/* 연보 데이터 [id, 제목, 연도, 소재, 대표작, 확장이력] */
+const TL = [["W001", "시모노세키의 까치", 1979, "", 0, 0], ["W002", "저 강은 알고 있다", 1979, "", 0, 0], ["W003", "그라운드에 부는바람", 1980, "", 0, 0], ["W004", "지하동굴의 비밀", 1980, "", 0, 0], ["W005", "해저여행", 1980, "", 0, 0], ["W006", "포화속을 뚫고", 1980, "", 0, 0], ["W007", "김태식", 1980, "", 0, 0], ["W008", "격정의 까치머리", 1981, "", 0, 0], ["W009", "곡예사", 1981, "서커스", 0, 0], ["W010", "까치의 제5계절", 1981, "", 0, 0], ["W011", "대지의 권법자", 1981, "", 0, 0], ["W012", "시모노세끼의 마지막불빛", 1981, "", 0, 0], ["W013", "최후의 곡예사", 1981, "", 0, 0], ["W014", "공포의 외인구단", 1982, "야구", 1, 1], ["W015", "국경의 갈가마귀", 1982, "무협", 0, 0], ["W016", "까치의 푸른능금", 1982, "아이스하키", 0, 0], ["W017", "돌바다", 1982, "", 0, 0], ["W018", "생과 사", 1982, "", 0, 0], ["W019", "스카라뮤슈", 1982, "", 0, 0], ["W020", "야성의 도시", 1982, "", 0, 0], ["W021", "열사의 한국인", 1982, "", 0, 0], ["W022", "풋사과", 1982, "", 0, 0], ["W023", "까치의 유리턱", 1983, "", 0, 0], ["W024", "날아라 까치야", 1983, "권투", 0, 0], ["W025", "붉은 눈", 1983, "", 0, 0], ["W026", "야성의 링", 1983, "", 0, 0], ["W027", "지옥의 링", 1983, "복싱", 0, 1], ["W028", "철부지 까치", 1983, "", 0, 0], ["W029", "청계천 까치", 1983, "복싱", 0, 0], ["W030", "까치의 양지", 1984, "", 0, 0], ["W031", "떠돌이 까치", 1984, "야구", 0, 1], ["W032", "불새의 투혼", 1984, "배구", 0, 0], ["W033", "고교 외인부대", 1985, "야구", 0, 0], ["W034", "네온사인", 1985, "", 0, 0], ["W035", "명인", 1985, "", 0, 0], ["W036", "불나무", 1985, "", 0, 0], ["W037", "안개강", 1985, "", 0, 0], ["W038", "야수의 전설", 1985, "", 0, 0], ["W039", "억세게 재수좋은 녀석들", 1985, "", 0, 0], ["W040", "해빙", 1985, "", 0, 0], ["W041", "해왕도의 비극", 1985, "", 0, 0], ["W042", "겨울에 피는 코스모스", 1986, "", 0, 0], ["W043", "고독한 영웅들", 1986, "권투", 0, 0], ["W044", "남과 남", 1986, "", 0, 0], ["W045", "뛰어!", 1986, "", 0, 0], ["W046", "외톨이 or 외토리", 1986, "", 0, 0], ["W047", "제왕", 1986, "", 0, 0], ["W048", "활 (일본어 판)", 1986, "", 0, 0], ["W063", "선착순", 1986, "", 0, 0], ["W049", "거인", 1987, "피아노", 0, 0], ["W050", "겨울까치", 1987, "", 0, 0], ["W051", "까치의 날개", 1987, "야구", 0, 1], ["W052", "무자리까치", 1987, "", 0, 0], ["W053", "사자여 새벽을 노래하라", 1987, "역사", 1, 1], ["W054", "야성의 목소리", 1987, "", 0, 0], ["W055", "억세게 재수없는 녀석들", 1987, "", 0, 0], ["W056", "지구에 매달리기", 1987, "", 0, 0], ["W057", "까치독사", 1988, "격투기", 0, 0], ["W058", "까치살모사", 1988, "격투기", 0, 0], ["W059", "까치의 둥지", 1988, "", 0, 0], ["W060", "두목", 1988, "", 0, 0], ["W061", "며느리 밥풀꽃에 대한 보고서", 1988, "", 1, 1], ["W062", "서울에서 왔수다", 1988, "", 0, 0], ["W064", "아마게돈", 1988, "SF", 1, 1], ["W065", "최후의 프로페쇼날", 1988, "", 0, 0], ["W066", "카론의 새벽", 1988, "경찰", 0, 1], ["W067", "Mr. 키위", 1988, "", 0, 0], ["W068", "내일 또 내일", 1989, "", 0, 0], ["W069", "럭치기", 1989, "", 0, 0], ["W070", "미로사냥", 1989, "", 0, 0], ["W071", "블루엔젤", 1989, "경찰", 0, 0], ["W072", "청춘학원", 1989, "", 0, 0], ["W073", "춤추는 애벌레", 1989, "", 0, 0], ["W074", "회색인간", 1989, "", 0, 0], ["W075", "병아리 광시곡", 1990, "", 0, 0], ["W076", "애수의 하모니카", 1990, "", 0, 0], ["W077", "마이너스 0.5초의 세계", 1991, "", 0, 0], ["W078", "뿌사리 까치", 1991, "씨름", 0, 0], ["W079", "오러클의 그림자", 1991, "", 0, 0], ["W080", "일리아드오디세이90", 1991, "", 0, 0], ["W081", "머나먼 제국 와룡의 제국", 1992, "", 0, 0], ["W082", "변신", 1992, "", 0, 0], ["W083", "뽕짝", 1992, "", 0, 0], ["W084", "엔젤딕", 1992, "경찰", 0, 1], ["W085", "와룡의 제국", 1992, "", 0, 0], ["W086", "이 땅에 남은 것은 의기천추 1부", 1992, "", 0, 0], ["W087", "장강", 1992, "", 0, 0], ["W088", "6월 6일생", 1992, "", 0, 0], ["W089", "아바돈", 1993, "", 0, 0], ["W090", "청춘찬가", 1993, "", 0, 0], ["W091", "폴리스", 1993, "경찰", 1, 1], ["W092", "폴리스 프로페셔날", 1993, "경찰", 0, 0], ["W093", "훈장", 1993, "", 0, 0], ["W094", "남벌", 1994, "전쟁", 1, 1], ["W095", "레베카 파일", 1994, "", 0, 0], ["W096", "마이다스", 1994, "", 0, 0], ["W097", "열광", 1994, "", 0, 0], ["W098", "이 땅에 남은 것은 의기천추 3부", 1994, "", 0, 0], ["W099", "초애", 1994, "", 0, 0], ["W100", "러브 컬렉션", 1995, "", 0, 0], ["W101", "뽕짝 (대만판)", 1995, "", 0, 0], ["W102", "아마게돈 (대만판)", 1995, "", 0, 0], ["W103", "황금의 꽃", 1995, "", 0, 0], ["W104", "여신의 시간 1부", 1996, "", 0, 0], ["W105", "여자 남자 스위치", 1996, "", 0, 0], ["W106", "우리친구 까지", 1996, "", 0, 0], ["W139", "흑월", 1996, "", 0, 0], ["W107", "검은천사", 1997, "느와르액션", 0, 0], ["W108", "귀천도", 1997, "무협 판타지", 0, 1], ["W109", "남벌 (대만판)", 1997, "", 0, 0], ["W110", "아르테미스", 1997, "", 0, 0], ["W111", "천국의 신화", 1997, "", 1, 0], ["W112", "흑기사", 1998, "", 0, 0], ["W113", "개미지옥", 1999, "", 0, 0], ["W114", "백기사", 1999, "", 0, 0], ["W140", "다크드래곤", 1999, "야구", 0, 0], ["W115", "백색영가", 2001, "음악(기타)", 0, 0], ["W116", "천국의 신화 3부", 2002, "", 0, 0], ["W117", "동물드로잉", 2004, "", 0, 0], ["W118", "늑대의 피", 2005, "", 0, 0], ["W119", "한국사", 2005, "", 0, 0], ["W120", "버디", 2007, "", 1, 1], ["W121", "창천수호위[蒼天守護衛]", 2007, "", 0, 0], ["W122", "레드파탈", 2008, "", 0, 0], ["W123", "비정시공", 2008, "", 0, 0], ["W124", "처음으로 만나는 삼국지", 2009, "", 0, 0], ["W125", "처음으로 만나는 그리스 로마신화", 2009, "", 0, 0], ["W126", "만화 세계사 넓게보기", 2012, "", 0, 0], ["W127", "만화 한국사 바로보기", 2012, "", 0, 0], ["W128", "한국사 바로보기", 2012, "", 0, 0], ["W129", "만화 삼국지", 2013, "", 0, 0], ["W130", "인생이란 나를 믿고 가는 것이다", 2013, "", 0, 0], ["W131", "굿바이 썬더", 2014, "승마", 0, 0], ["W132", "코리안 조", 2014, "", 0, 0], ["W133", "만화 그리스로마신화", 2018, "", 0, 0], ["W134", "초월", 2018, "", 0, 0], ["W135", "황금의 나라 천년 신라", 2019, "", 0, 0], ["W136", "바스락", 2020, "", 0, 0], ["W137", "손", 2020, "", 0, 0], ["W138", "늑대처럼 홀로", 2022, "", 0, 0]];
+
+const ERAS = [
+  {y:'1979',t:'데뷔',d:'「시모노세키의 까치」 「저 강은 알고 있다」로 출발'},
+  {y:'1982',t:'프로야구 출범',d:'같은 해 「공포의 외인구단」이 태어나 시대와 공명'},
+  {y:'1986',t:'스크린 정복',d:'영화 「이장호의 외인구단」 그해 한국영화 흥행 1위'},
+  {y:'1987',t:'국산 TV 애니의 원년',d:'「떠돌이 까치」 어린이날 방영 — 국산 최초 TV용 장편 애니'},
+  {y:'1994',t:'브라운관의 오혜성',d:'KBS2 「폴리스」 — 신인 이병헌이 오혜성을 연기'},
+  {y:'1995–96',t:'느와르와 묵시록',d:'「테러리스트」 남우주연상 2관왕 · 「아마게돈」 극장 개봉'},
+  {y:'1997',t:'필생의 대하물',d:'「천국의 신화」 시작 — 표현의 자유 재판 끝에 2003 무죄 확정'},
+  {y:'2007',t:'대통령상',d:'「버디」 대한민국 만화대상 대통령상 수상'},
+  {y:'2015',t:'웹툰 시대로',d:'「천국의 신화」 네이버웹툰 풀컬러 재연재'},
+  {y:'2026',t:'확장은 현재진행형',d:'「블루엔젤」 리부트 · 「카론의 새벽」 AI 리메이크'}
+];
+
+/* 무드 추천 */
+const MOODS = [
+  {emo:'🥀',t:'파멸적 순정',d:'끝내 이루어지지 않아서 더 오래 남는 사랑',works:['W014','W027'],
+   ext:[['슬램덩크','승부 아래 흐르는 순정'],['봄날은 간다','사랑이 어떻게 사람을 무너뜨리는가'],['더 퍼스트 슬램덩크','세대를 건너 다시 만나는 그 코트']]},
+  {emo:'🌙',t:'하드보일드의 밤',d:'법 바깥에서 정의를 묻는 사람들',works:['W066','W091','W084','W071'],
+   ext:[['무뢰한','부서진 자들의 느와르'],['시그널','시대를 건너 범죄를 쫓다'],['존 윅','스타일로 완성된 복수극']]},
+  {emo:'🔥',t:'역사와 민족의 서사',d:'시대에 휩쓸린 개인, 기록되지 않은 이름들',works:['W053','W094','W111'],
+   ext:[['밀정','신념과 생존 사이'],['파친코','4대에 걸친 생애 대하극'],['신과함께','한국 신화 세계관의 확장']]},
+  {emo:'🛸',t:'묵시록의 상상력',d:'소년의 꿈에서 시작되는 인류 최후의 전쟁',works:['W064','W108'],
+   ext:[['아키라','묵시록 SF의 좌표'],['에반게리온','각성과 종말의 서사'],['환혼','판타지 세계관의 현재형']]},
+  {emo:'🌱',t:'소년·소녀의 성장',d:'잃어버린 것들 사이에서 다시 일어서는 마음',works:['W031','W051','W120'],
+   ext:[['아기공룡 둘리','1987년생 국산 애니 동창'],['라켓소년단','스포츠와 성장의 온도'],['H2','야구 서정의 정석']]},
+  {emo:'🕯️',t:'사회를 응시하는 눈',d:'구조가 사람을 어떻게 몰아붙이는지에 대한 보고서',works:['W061'],
+   ext:[['82년생 김지영','동시대의 보고서'],['소년심판','부조리를 응시하는 법정'],['미쓰백','사각지대에서 서로를 알아보다']]}
+];
+
+/* ============ 렌더링 ============ */
+const $ = s=>document.querySelector(s);
+const el = (tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e};
+
+/* --- 통계 --- */
+(function(){
+  let done=0, plan=0;
+  ORDER.forEach(id=>WORKS[id].exp.forEach(e=>e.plan?plan++:done++));
+  $('#statExp').innerHTML = `${done}<em>건</em>`;
+  document.querySelector('#statExp').closest('.stat').querySelector('.l').textContent =
+    `실현된 2차 확장 (추진·계획 ${plan}건 별도)`;
+})();
+
+/* --- 네트워크 --- */
+(function(){
+  const svg = $('#netSvg'); const NS='http://www.w3.org/2000/svg';
+  const cById = Object.fromEntries(CHARS.map(c=>[c.id,c]));
+  const wById = Object.fromEntries(NWORKS.map(w=>[w.id,w]));
+  const g = (n)=>document.createElementNS(NS,n);
+  // edges
+  EDGES.forEach(([c,w,role],i)=>{
+    const a=cById[c], b=wById[w];
+    const ln=g('line');
+    ln.setAttribute('x1',a.x);ln.setAttribute('y1',a.y);ln.setAttribute('x2',b.x);ln.setAttribute('y2',b.y);
+    ln.setAttribute('class','edge');ln.dataset.c=c;ln.dataset.w=w;
+    svg.appendChild(ln);
+  });
+  // work nodes
+  NWORKS.forEach(w=>{
+    const wk=WORKS[w.id];
+    const grp=g('g'); grp.setAttribute('class','n-work has-dossier'); grp.dataset.w=w.id;
+    const c=g('circle'); c.setAttribute('cx',w.x);c.setAttribute('cy',w.y);c.setAttribute('r',15);
+    const t=g('text'); t.setAttribute('x',w.x);t.setAttribute('y',w.y+32);t.setAttribute('text-anchor','middle');
+    t.textContent=wk.title.length>9?wk.title.slice(0,9)+'…':wk.title;
+    grp.appendChild(c);grp.appendChild(t);
+    grp.addEventListener('click',()=>openModal(w.id));
+    svg.appendChild(grp);
+  });
+  // char nodes
+  CHARS.forEach(ch=>{
+    const grp=g('g'); grp.setAttribute('class','n-char'); grp.dataset.c=ch.id;
+    const c=g('circle'); c.setAttribute('cx',ch.x);c.setAttribute('cy',ch.y);c.setAttribute('r',ch.r);
+    const t=g('text'); t.setAttribute('x',ch.x);t.setAttribute('y',ch.y+5);t.setAttribute('text-anchor','middle');
+    t.textContent=ch.name;
+    const s=g('text'); s.setAttribute('x',ch.x);s.setAttribute('y',ch.y+ch.r+18);s.setAttribute('text-anchor','middle');
+    s.setAttribute('class','sub'); s.textContent=ch.sub;
+    grp.appendChild(c);grp.appendChild(t);grp.appendChild(s);
+    grp.addEventListener('click',()=>selectChar(ch.id));
+    svg.appendChild(grp);
+  });
+  let selected=null;
+  window.selectChar=function(id){
+    if(selected===id){clearSel();return}
+    selected=id;
+    const ch=cById[id];
+    const linked=EDGES.filter(e=>e[0]===id).slice().sort((a,b)=>WORKS[a[1]].year-WORKS[b[1]].year);
+    const linkedW=new Set(linked.map(e=>e[1]));
+    svg.querySelectorAll('.edge').forEach(l=>{
+      l.classList.toggle('hi',l.dataset.c===id);
+      l.classList.toggle('dim',l.dataset.c!==id);
+    });
+    svg.querySelectorAll('.n-work').forEach(n=>{
+      n.classList.toggle('hi',linkedW.has(n.dataset.w));
+      n.classList.toggle('dim',!linkedW.has(n.dataset.w));
+    });
+    svg.querySelectorAll('.n-char').forEach(n=>{
+      n.classList.toggle('hi',n.dataset.c===id);
+      n.classList.toggle('dim',n.dataset.c!==id);
+    });
+    const panel=$('#uniPanel');
+    panel.innerHTML=`<h3><span class="dot"></span>${ch.name}</h3><div class="tag">${ch.sub}</div>
+      <p>${linked.length}편의 작품에서 서로 다른 운명을 살았습니다.</p>
+      <div class="role-list">${linked.map(e=>`<div class="role-item" onclick="openModal('${e[1]}')">
+        <span class="w">${WORKS[e[1]].title}</span><span class="r">${e[2]} · ${WORKS[e[1]].year}</span></div>`).join('')}</div>
+      <p style="font-size:12px;color:var(--muted);margin-top:16px">다시 클릭하면 전체 보기로 돌아갑니다</p>`;
+  };
+  function clearSel(){
+    selected=null;
+    svg.querySelectorAll('.hi,.dim').forEach(n=>n.classList.remove('hi','dim'));
+    $('#uniPanel').innerHTML=`<h3><span class="dot"></span>스타 시스템</h3><div class="tag">STAR SYSTEM</div>
+      <p>왼쪽 지도에서 붉은 원이 캐릭터, 회색 원이 작품입니다. 하나의 캐릭터가 여러 작품에서 전혀 다른 인생을 사는 구조가 이현세 세계관의 뼈대입니다.</p>
+      <div class="indie-note"><b>독립 세계관</b> — 순이(며느리 밥풀꽃), 위만(천국의 신화), 성미수(버디), 좌운검(귀천도)은 스타 시스템 밖에서 각자의 세계를 이룹니다.</div>`;
+  }
+})();
+
+/* --- 연보 차트 --- */
+(function(){
+  const svg=$('#tlChart'); const NS='http://www.w3.org/2000/svg';
+  const g=n=>document.createElementNS(NS,n);
+  const years={}; TL.forEach(w=>{(years[w[2]]=years[w[2]]||[]).push(w)});
+  const y0=1979,y1=2022,W=1080,H=240,padL=30,padR=14,padT=26,padB=34;
+  const n=y1-y0+1, bw=(W-padL-padR)/n-3, max=10;
+  const tip=$('#tlTip');
+  // gridlines
+  [0,5,10].forEach(v=>{
+    const yy=padT+(H-padT-padB)*(1-v/max);
+    const l=g('line');l.setAttribute('x1',padL);l.setAttribute('x2',W-padR);l.setAttribute('y1',yy);l.setAttribute('y2',yy);
+    l.setAttribute('stroke','var(--grid)');l.setAttribute('stroke-width','1');svg.appendChild(l);
+    const t=g('text');t.setAttribute('x',padL-8);t.setAttribute('y',yy+4);t.setAttribute('text-anchor','end');
+    t.setAttribute('fill','var(--muted)');t.setAttribute('font-size','10');t.textContent=v;svg.appendChild(t);
+  });
+  for(let y=y0;y<=y1;y++){
+    const arr=years[y]||[], c=arr.length;
+    const x=padL+(y-y0)*((W-padL-padR)/n)+1.5;
+    const h=c===0?0:(H-padT-padB)*(c/max);
+    const yy=H-padB-h;
+    if(c>0){
+      const r=g('rect');
+      r.setAttribute('x',x);r.setAttribute('y',yy);r.setAttribute('width',bw);r.setAttribute('height',Math.max(h,2));
+      r.setAttribute('rx',3);r.setAttribute('fill', arr.some(w=>w[4])?'#e66767':'#3987e5');
+      r.setAttribute('opacity',arr.some(w=>w[4])?'0.95':'0.8');
+      r.style.cursor='pointer';
+      r.addEventListener('mousemove',ev=>{
+        const names=arr.map(w=>(w[4]?'★ ':'')+w[1]);
+        tip.style.display='block';
+        tip.style.left=Math.min(ev.clientX+14,innerWidth-300)+'px';
+        tip.style.top=(ev.clientY+14)+'px';
+        tip.innerHTML=`<div class="y">${y} · ${c}편</div><div class="t">${names.slice(0,6).join('<br>')}</div>`+
+          (names.length>6?`<div class="more">외 ${names.length-6}편</div>`:'');
+      });
+      r.addEventListener('mouseleave',()=>tip.style.display='none');
+      svg.appendChild(r);
+      if(arr.some(w=>w[4])){
+        const s=g('text');s.setAttribute('x',x+bw/2);s.setAttribute('y',yy-6);s.setAttribute('text-anchor','middle');
+        s.setAttribute('fill','#e66767');s.setAttribute('font-size','11');s.textContent='★';svg.appendChild(s);
+      }
+    }
+    if((y-y0)%5===0||y===y1){
+      const t=g('text');t.setAttribute('x',x+bw/2);t.setAttribute('y',H-10);t.setAttribute('text-anchor','middle');
+      t.setAttribute('fill','var(--muted)');t.setAttribute('font-size','10.5');t.textContent=y;svg.appendChild(t);
+    }
+  }
+  // baseline
+  const bl=g('line');bl.setAttribute('x1',padL);bl.setAttribute('x2',W-padR);
+  bl.setAttribute('y1',H-padB);bl.setAttribute('y2',H-padB);bl.setAttribute('stroke','#383835');svg.appendChild(bl);
+})();
+
+/* --- 시대 스트립 --- */
+$('#eraStrip').innerHTML = ERAS.map(e=>`<div class="era"><div class="y">${e.y}</div><div class="t">${e.t}</div><div class="d">${e.d}</div></div>`).join('');
+
+/* --- 연보 목록 --- */
+(function(){
+  const dossier=new Set(ORDER);
+  function render(f){
+    const box=$('#decades'); box.innerHTML='';
+    const filtered=TL.filter(w=>{
+      if(f==='star')return w[4];
+      if(f==='adapted')return w[5]||dossier.has(w[0]);
+      if(f==='sports')return /야구|권투|복싱|격투|배구|씨름|골프|아이스하키|승마|서커스/.test(w[3]||'')||/링|까치|외인|버디/.test(w[1])&&/야구|복싱|권투/.test(w[3]||'');
+      return true;
+    });
+    const decs={};
+    filtered.forEach(w=>{const d=Math.floor(w[2]/10)*10;(decs[d]=decs[d]||[]).push(w)});
+    const names={1970:'1970s — 출발',1980:'1980s — 폭발의 시대',1990:'1990s — 성인 극화 전성기',2000:'2000s — 새로운 실험',2010:'2010s — 교양과 회고',2020:'2020s — 현재'};
+    Object.keys(decs).sort().forEach(d=>{
+      const sec=el('div','decade');
+      sec.appendChild(el('h5',null,`${names[d]||d+'s'} <span>${decs[d].length}편</span>`));
+      const flow=el('div','works-flow');
+      decs[d].forEach(w=>{
+        const cls=['wchip']; if(w[4])cls.push('star'); if(w[5])cls.push('adapted'); if(dossier.has(w[0]))cls.push('dossier');
+        const chip=el('span',cls.join(' '),`${w[1]}<span class="y">${w[2]}</span>`);
+        if(dossier.has(w[0]))chip.addEventListener('click',()=>openModal(w[0]));
+        flow.appendChild(chip);
+      });
+      sec.appendChild(flow); box.appendChild(sec);
+    });
+  }
+  render('all');
+  $('#tlFilters').addEventListener('click',e=>{
+    const b=e.target.closest('.chip'); if(!b)return;
+    document.querySelectorAll('#tlFilters .chip').forEach(c=>c.classList.remove('on'));
+    b.classList.add('on'); render(b.dataset.f);
+  });
+})();
+
+/* --- IP 매트릭스 --- */
+(function(){
+  $('#ipLegend').innerHTML = Object.entries(MEDIA).map(([k,m])=>
+    `<span class="it"><span class="sw" style="background:${m.color}"></span>${m.label}</span>`).join('')+
+    `<span class="it"><span class="sw o" style="color:var(--muted)"></span>추진·계획</span>`;
+  const tbl=$('#ipTable');
+  const cols=Object.keys(MEDIA);
+  let html='<thead><tr><th style="text-align:left;padding-left:18px">원작 만화</th>'+
+    cols.map(c=>`<th>${MEDIA[c].label}</th>`).join('')+'<th>확장</th></tr></thead><tbody>';
+  ORDER.slice().sort((a,b)=>WORKS[a].year-WORKS[b].year).forEach(id=>{
+    const w=WORKS[id];
+    const byType={}; w.exp.forEach(e=>{(byType[e.t]=byType[e.t]||[]).push(e)});
+    const solid=w.exp.filter(e=>!e.plan).length;
+    html+=`<tr><td class="wt" onclick="openModal('${id}')">${w.tier===0?'<span style="color:var(--accent)">★</span> ':''}${w.title}`+
+      `<span class="y">${w.year}</span>${w.exp.some(e=>e.rev)?'<span class="rev-badge">역방향</span>':''}`+
+      `<span class="co">${w.credits}</span></td>`;
+    cols.forEach(c=>{
+      const arr=byType[c];
+      if(!arr){html+='<td><span class="none">·</span></td>';return}
+      const allPlan=arr.every(e=>e.plan);
+      const titleTxt=arr.map(e=>`${e.title} (${e.y})${e.plan?' — 추진·계획':''}`).join(' / ');
+      html+=`<td><span class="ipdot ${allPlan?'o':''} ${arr.length>1?'multi':''}" data-n="${arr.length>1?arr.length:''}" `+
+        `style="background:${MEDIA[c].color};color:${MEDIA[c].color}" title="${titleTxt.replace(/"/g,'&quot;')}"></span></td>`;
+    });
+    html+=`<td style="font-weight:800;color:${solid?'var(--ink)':'var(--muted)'}">${solid||'—'}</td></tr>`;
+  });
+  tbl.innerHTML=html+'</tbody>';
+})();
+
+/* --- 도감 카드 --- */
+(function(){
+  const grid=$('#dexGrid');
+  ORDER.forEach(id=>{
+    const w=WORKS[id];
+    const card=el('div','card');
+    card.innerHTML=`<div class="top"><span class="yr">${w.year} · ${w.genre}</span>
+      <span class="tier ${w.tier===1?'t1':''}">${w.tier===0?'★ 대표작':'IP 검증작'}</span></div>
+      <h3>${w.title}</h3><div class="log">${w.log}</div>
+      <div class="badges">${w.exp.map(e=>`<span class="mbadge ${e.plan?'o':''}" style="background:${MEDIA[e.t].color};color:${e.plan?MEDIA[e.t].color:'#0d0d0d'}">${MEDIA[e.t].label}${e.y?' \'' + String(e.y).slice(2):''}</span>`).join('')}</div>`;
+    card.addEventListener('click',()=>openModal(id));
+    grid.appendChild(card);
+  });
+})();
+
+/* --- 무드 --- */
+(function(){
+  const grid=$('#moodGrid');
+  MOODS.forEach(m=>{
+    const box=el('div','mood');
+    box.innerHTML=`<div class="emo">${m.emo}</div><h3>${m.t}</h3><div class="d">${m.d}</div>
+      <h6>이현세에서는</h6><div class="in-works">${m.works.map(id=>
+        `<span class="wchip dossier" onclick="openModal('${id}')">${WORKS[id].title}<span class="y">${WORKS[id].year}</span></span>`).join('')}</div>
+      <h6>이 정서가 이어지는 콘텐츠</h6><div class="ext">${m.ext.map(e=>
+        `<div><b>${e[0]}</b> — <span>${e[1]}</span></div>`).join('')}</div>`;
+    grid.appendChild(box);
+  });
+})();
+
+/* --- 모달 --- */
+window.openModal=function(id){
+  const w=WORKS[id]; if(!w)return;
+  const box=$('#modalBox');
+  box.innerHTML=`<button class="close" onclick="closeModal()">✕</button>
+    <div class="meta"><span>${w.year}</span><span>${w.genre}</span><span>${w.credits}</span>
+      <span style="color:${w.tier===0?'var(--accent)':'var(--c-film)'}">${w.tier===0?'★ Tier 0 대표작':'Tier 1 · IP 검증작'}</span></div>
+    <h2>${w.title}</h2>
+    <div class="log">${w.log}</div>
+    <div class="mod-sec"><h4>STORY</h4><p>${w.syn}</p>${w.hist?`<div class="hist-note">${w.hist}</div>`:''}</div>
+    <div class="mod-sec"><h4>CHARACTERS</h4><div class="char-chips">${w.chars.map(c=>
+      `<span class="cchip"><b>${c[0]}</b> <span>— ${c[1]}</span></span>`).join('')}</div></div>
+    <div class="mod-sec"><h4>IP EXPANSION — 확장 계보</h4><div class="exp-list">${w.exp.length?w.exp.map(e=>
+      `<div class="exp"><span class="pin ${e.plan?'o':''}" style="background:${MEDIA[e.t].color};color:${MEDIA[e.t].color}"></span>
+       <span class="ty" style="color:${MEDIA[e.t].color}">${MEDIA[e.t].label}</span>
+       <span class="tx"><b>${e.title}</b> · ${e.y}${e.plan?' <span class="note">(추진·계획)</span>':''}<br><span class="note">${e.note}</span></span></div>`).join(''):
+      '<div class="exp"><span class="tx" style="color:var(--muted)">아직 영상화되지 않은 미개척 원석입니다.</span></div>'}</div></div>
+    <div class="mod-sec"><h4>IF YOU LIKED THIS — 이 작품이 좋았다면</h4><div class="reco-grid">
+      <div class="reco internal" onclick="openModal('${w.reco.next}')"><span class="arrow">↳ 세계관 안에서</span>
+        <span><b>${WORKS[w.reco.next].title}</b> <span>(${WORKS[w.reco.next].year}) — 이어서 읽기</span></span></div>
+      ${w.reco.ext.map(e=>`<div class="reco"><span class="arrow">→ 바깥에서</span><span><b>${e[0]}</b> <span>— ${e[1]}</span></span></div>`).join('')}
+    </div></div>`;
+  $('#modalBg').classList.add('open');
+  document.body.style.overflow='hidden';
+};
+window.closeModal=function(){
+  $('#modalBg').classList.remove('open');
+  document.body.style.overflow='';
+};
+$('#modalBg').addEventListener('click',e=>{if(e.target.id==='modalBg')closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+
+/* --- community prototype --- */
+window.mockSub=function(){
+  const m=document.getElementById('subMsg');m.style.display='block';
+  document.getElementById('subInput').value='';
+};
+const PLAZA_SEED={
+  W014:'2026년의 오혜성을 캐스팅한다면, 누구인가요?',
+  W027:'"링은 나에게 지옥이었다" — 이 마지막 대사를 처음 읽었을 때의 기억',
+  W031:'1987년 5월 5일, 그날 TV 앞에 있었나요?',
+  W051:'까순이가 날아오르던 장면, 기억하시나요?',
+  W053:'가장 영상화되길 바라는 이현세의 미개척작은?',
+  W061:'2026년의 시선으로 순이의 이야기를 다시 읽는다면',
+  W064:'아마게돈 리부트 — 애니메이션과 실사, 어느 쪽이어야 할까',
+  W066:'영화 「테러리스트」 먼저? 원작 먼저? 당신의 입장 순서',
+  W071:'리부트로 돌아온 하지란, 원작과 무엇이 달라졌나',
+  W084:'하지란 유니버스가 시즌제 드라마가 된다면',
+  W091:'오혜성 vs 마동탁 — 정의는 어느 쪽에 있었나',
+  W094:'남벌을 2026년에 다시 만든다면 무엇을 바꿔야 할까',
+  W108:'영화가 먼저였던 만화 — 또 어떤 역방향 사례를 아시나요',
+  W111:'천국의 신화 47권 중 가장 좋아하는 장은?',
+  W120:'성미수와 윤해령, 당신은 어느 쪽이었나요'
+};
+const _open=window.openModal;
+window.openModal=function(id){
+  _open(id);
+  const w=WORKS[id]; if(!w)return;
+  const box=document.querySelector('#modalBox');
+  box.insertAdjacentHTML('beforeend',
+    `<div class="plaza-teaser"><div class="k">🏕️ 이 작품의 광장 · 8월 오픈</div>
+     <div class="q">${PLAZA_SEED[id]||'이 작품을 처음 만난 순간을 들려주세요'}</div>
+     <div class="s">시드 토픽으로 대기 중 — 광장이 열리면 이 질문부터 시작합니다. 좋은 이야기는 작가의 레터에 실립니다.</div></div>`);
+};
+
+</script>
+</body>
+</html>
