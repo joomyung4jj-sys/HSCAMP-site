@@ -70,6 +70,41 @@ h1 .thin{color:var(--muted);font-weight:300}
 
 /* ---------- universe (network) ---------- */
 .uni-grid{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start}
+.case{border:1px solid rgba(230,103,103,.3);background:rgba(230,103,103,.05);border-radius:14px;padding:26px 28px;margin-bottom:36px}
+.case-kicker{font-size:12px;letter-spacing:.3em;color:var(--accent);font-weight:700;margin-bottom:8px}
+.case-title{font-size:clamp(19px,2.6vw,24px);font-weight:800;line-height:1.35}
+.case-steps{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:8px}
+.case-steps li{font-size:14px;color:var(--ink-2);line-height:1.6;padding-left:14px;border-left:2px solid rgba(230,103,103,.35)}
+.case-steps b{color:var(--ink);font-variant-numeric:tabular-nums;margin-right:6px}
+@media(max-width:768px){.case{padding:20px 18px}}
+.review{display:block;border:1px solid rgba(201,133,0,.35);background:rgba(201,133,0,.05);border-radius:14px;padding:26px 28px;margin-bottom:28px;color:inherit;text-decoration:none}
+.review .case-kicker{color:var(--c-overseas)}
+.review-by{font-size:13px;color:var(--muted);margin-top:6px}
+.review-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin:14px 0 0;max-width:760px}
+.review-q{margin:16px 0 0;padding-left:16px;border-left:2px solid var(--c-overseas);font-size:15px;font-style:italic;color:var(--ink);line-height:1.6}
+.review-q span{display:block;font-style:normal;font-size:13.5px;color:var(--ink-2);margin-top:6px}
+.review-more{margin-top:16px;font-size:13px;font-weight:700;color:var(--c-overseas)}
+.review:hover .review-more{text-decoration:underline}
+@media(max-width:768px){.review{padding:20px 18px}}
+.paper-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.paper{display:block;background:var(--surface);border:1px solid var(--hair);border-radius:14px;padding:20px 22px;color:inherit;text-decoration:none;transition:border-color .15s}
+.paper:hover{border-color:rgba(230,103,103,.45)}
+.paper-meta{font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.paper-tag{display:inline-block;margin-right:8px;padding:1px 8px;border:1px solid var(--hair);border-radius:999px;color:var(--ink-2);font-size:11px;font-weight:600}
+.paper-t{font-size:15.5px;font-weight:700;line-height:1.45;color:var(--ink)}
+.paper-v{font-size:12.5px;color:var(--accent);margin-top:6px;font-weight:600}
+.paper-d{font-size:13.5px;color:var(--ink-2);margin-top:8px;line-height:1.6}
+@media(max-width:768px){.paper-grid{grid-template-columns:1fr}}
+.news-list{border-top:1px solid var(--hair)}
+.news-item{display:grid;grid-template-columns:96px 1fr;gap:20px;padding:20px 0;border-bottom:1px solid var(--hair);color:inherit;text-decoration:none}
+.news-date{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:2px}
+.news-src{font-size:12.5px;color:var(--accent);font-weight:700;margin-bottom:5px}
+.news-tag{display:inline-block;margin-left:6px;padding:1px 7px;border:1px solid var(--c-overseas);color:var(--c-overseas);border-radius:999px;font-size:11px;font-weight:600}
+.news-t{font-size:16px;font-weight:700;line-height:1.45;color:var(--ink)}
+.news-d{font-size:13.5px;color:var(--ink-2);margin-top:6px;line-height:1.6}
+.news-item:hover .news-t{text-decoration:underline;text-underline-offset:3px}
+.news-note{margin-top:18px;font-size:12px;color:var(--muted)}
+@media(max-width:768px){.news-item{grid-template-columns:1fr;gap:4px;padding:16px 0}.news-t{font-size:15px}}
 @media(max-width:900px){.uni-grid{grid-template-columns:1fr}}
 .net-box{background:var(--surface);border:1px solid var(--hair);border-radius:16px;padding:10px;position:relative}
 .net-box svg{width:100%;height:auto;display:block}
@@ -306,13 +341,15 @@ footer em{font-style:normal;color:var(--accent)}
       <a href="#ipmap">IP 확장</a>
       <a href="#dex">작품 도감</a>
       <a href="#moods">정서로 잇기</a>
+      <a href="#news">뉴스</a>
+      <a href="#research">연구</a>
     </div>
   </div>
 </nav>
 
 <header id="top">
   <div class="wrap">
-    <div class="hero-kicker"><span class="seal">현</span> LEE HYUN-SE UNIVERSE · SINCE 1979</div>
+    <div class="hero-kicker"><span class="seal">현</span> LEE HYUN-SE UNIVERSE · SINCE 1979 · 1954년 출생 (호적 1956)</div>
     <h1>이현세의 세계를,<br><span class="thin">다음 세대에게.</span></h1>
     <p class="hero-sub">까치 <b>오혜성</b>은 야구장에서, 링 위에서, 버마전선에서, 미래의 전장에서 다시 태어난다.
     같은 얼굴로 다른 운명을 사는 인물들이 엮어낸 <b>하나의 거대한 세계</b> — 만화에서 영화·드라마·애니메이션·할리우드,
@@ -450,6 +487,190 @@ footer em{font-style:normal;color:var(--accent)}
   </div>
 </section>
 
+<section id="news" style="background:var(--surface-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">In the News</div>
+      <div class="sec-title">뉴스 — 언론이 기록한 이현세</div>
+      <p class="sec-desc">2003년 「천국의 신화」 무죄 확정부터 2026년 「남벌」 뮤지컬까지, 국내외 주요 기사 <b>16건</b>.
+      제목을 누르면 원문 기사로 이동합니다.</p>
+    </div>
+    <div class="case">
+      <div class="case-kicker">사건 · 1998–2003</div>
+      <div class="case-title">「천국의 신화」 재판 — 만화 표현의 자유를 지킨 6년</div>
+      <ol class="case-steps">
+        <li><b>1998.2</b> 청소년용 「창세신화」 편이 음란물로 몰려 벌금 300만 원 약식기소 (구 미성년자보호법)</li>
+        <li><b>1998.6</b> 약식명령에 불복해 정식재판 청구</li>
+        <li><b>2000.7</b> 1심 유죄 — 출판사는 벌금을 냈고, 작가는 홀로 항소</li>
+        <li><b>2001.6</b> 항소심 무죄</li>
+        <li><b>2002.2</b> 헌법재판소, 근거 조항('불량만화' 정의)에 위헌결정</li>
+        <li><b>2003.1.24</b> 대법원 무죄 확정</li>
+        <li><b>2022.11</b> 웹툰협회 공로상 — "표현의 자유를 위해 애써"</li>
+      </ol>
+    </div>
+    <div class="news-list">
+      <a class="news-item" href="https://www.hidomin.com/news/articleView.html?idxno=721021" target="_blank" rel="noopener">
+        <div class="news-date">2026.09.14</div>
+        <div><div class="news-src">경북도민일보</div>
+        <div class="news-t">이현세·이두호·이상무…안동서 경북 출신 만화가 특별전</div>
+        <div class="news-d">2026 경북 K-스토리 페스티벌(9.17~18, 안동문화예술의전당)에서 열린 경북 출신 만화가 3인 특별전.</div></div>
+      </a>
+      <a class="news-item" href="https://magazine.hankyung.com/money/article/202609094397c" target="_blank" rel="noopener">
+        <div class="news-date">2026.09.09</div>
+        <div><div class="news-src">한경매거진&amp;북</div>
+        <div class="news-t">이현세 &#x27;남벌&#x27;, 30여 년 만에 무대로…150분 대형 뮤지컬 10월 초연</div>
+        <div class="news-d">문체부·예술경영지원센터 &#x27;2026 대형 뮤지컬 시범공연 지원&#x27; 선정작. 극작·연출 이종훈, 작곡 조우인.</div></div>
+      </a>
+      <a class="news-item" href="https://www.themusical.co.kr/News/Detail?num=14745" target="_blank" rel="noopener">
+        <div class="news-date">2026.09.03</div>
+        <div><div class="news-src">더뮤지컬</div>
+        <div class="news-t">이현세 &lt;남벌&gt; 뮤지컬로 재탄생…10월 개막</div>
+        <div class="news-d">「남벌」(1994)의 첫 뮤지컬화. 10.23~11.14 티켓링크 1975씨어터, 26곡·150분.</div></div>
+      </a>
+      <a class="news-item" href="https://www.mt.co.kr/tech/2026/07/03/2026070314184435064" target="_blank" rel="noopener">
+        <div class="news-date">2026.07.03</div>
+        <div><div class="news-src">머니투데이</div>
+        <div class="news-t">1600명 키워낸 웹툰 사관학교…이현세·네이버웹툰의 &#x27;10박11일&#x27; 지옥 훈련</div>
+        <div class="news-d">2001년 시작한 이현세 만화 창작캠프. 올해 양평에서 91명 참가, 누적 1,600여 명.</div></div>
+      </a>
+      <a class="news-item" href="https://view.asiae.co.kr/article/2026021209515417383" target="_blank" rel="noopener">
+        <div class="news-date">2026.02.12</div>
+        <div><div class="news-src">아시아경제</div>
+        <div class="news-t">&quot;나의 마지막 웹툰 될 수도&quot;…이현세 &#x27;블루엔젤&#x27;, 35년 만에 부활</div>
+        <div class="news-d">2월 13일부터 카카오페이지·카카오웹툰 연재. 「공포의 외인구단」 등 단행본 20종 동시 공개.</div></div>
+      </a>
+      <a class="news-item" href="https://www.animenewsnetwork.com/news/2026-02-12/blue-angel-manhwa-revived-after-35-years-with-new-webtoon-sequel/.234075" target="_blank" rel="noopener">
+        <div class="news-date">2026.02.12</div>
+        <div><div class="news-src">Anime News Network <span class="news-tag">해외</span></div>
+        <div class="news-t">Blue Angel Manhwa Revived After 35 Years With New Webtoon Sequel</div>
+        <div class="news-d">영어권 최대 애니메이션·만화 뉴스 사이트의 블루엔젤 리부트 보도.</div></div>
+      </a>
+      <a class="news-item" href="https://www.technologyreview.com/2025/04/22/1114874/generative-ai-south-korea-webcomics/" target="_blank" rel="noopener">
+        <div class="news-date">2025.04.22</div>
+        <div><div class="news-src">MIT Technology Review <span class="news-tag">해외</span></div>
+        <div class="news-t">Generative AI is reshaping South Korea&#x27;s webcomics industry</div>
+        <div class="news-d">한국 웹툰 산업의 AI 전환을 다룬 기획. 이현세 AI 프로젝트가 핵심 사례로 실렸다.</div></div>
+      </a>
+      <a class="news-item" href="https://www.newspim.com/news/view/20240509000665" target="_blank" rel="noopener">
+        <div class="news-date">2024.05.09</div>
+        <div><div class="news-src">뉴스핌</div>
+        <div class="news-t">&#x27;한국 만화 거장&#x27; 이현세 특별전…&quot;만화 변천사와 K웹툰 미래 조망&quot;</div>
+        <div class="news-d">국립중앙도서관 「이현세의 길: K-웹툰 전설의 시작」(5.10~7.31), 원화 120여 점.</div></div>
+      </a>
+      <a class="news-item" href="https://www.mt.co.kr/future/2024/02/10/2024013010590996073" target="_blank" rel="noopener">
+        <div class="news-date">2024.02.10</div>
+        <div><div class="news-src">머니투데이</div>
+        <div class="news-t">&quot;내가 사라져도 까치는 산다? 통쾌&quot;...거장 이현세도 매료시킨 AI</div>
+        <div class="news-d">재담미디어·라이언로켓과 함께한 이현세 AI 프로젝트와 「카론의 새벽」 AI 리메이크.</div></div>
+      </a>
+      <a class="news-item" href="https://www.webtoonguide.com/ko/board/news-column/17484" target="_blank" rel="noopener">
+        <div class="news-date">2022.11.04</div>
+        <div><div class="news-src">웹툰가이드</div>
+        <div class="news-t">웹툰협회, 이현세 작가에게 공로상 수상... &quot;표현의 자유를 위해 애써&quot;</div>
+        <div class="news-d">제22회 만화의 날. 「천국의 신화」 6년 법정 싸움에 대한 공로상.</div></div>
+      </a>
+      <a class="news-item" href="https://www.webtoonguide.com/ko/board/news-column/17446" target="_blank" rel="noopener">
+        <div class="news-date">2022.10.28</div>
+        <div><div class="news-src">웹툰가이드</div>
+        <div class="news-t">재담미디어·이현세 작가, 만화제작 위한 AI개발 도전!</div>
+        <div class="news-d">4,147권 분량의 AI 학습 데이터 구축과 공동 기술 개발 협약. AI 프로젝트의 출발점.</div></div>
+      </a>
+      <a class="news-item" href="https://www.tenasia.co.kr/article/2016102702484" target="_blank" rel="noopener">
+        <div class="news-date">2016.10.27</div>
+        <div><div class="news-src">텐아시아</div>
+        <div class="news-t">[2016 대중문화예술상] &#x27;태양의 후예&#x27; 송송커플, 나란히 대통령 표창 영예(종합)</div>
+        <div class="news-d">제7회 대중문화예술상 대통령 표창 수상자에 이현세 포함.</div></div>
+      </a>
+      <a class="news-item" href="https://m.seoul.co.kr/news/life/2009/07/28/20090728021007" target="_blank" rel="noopener">
+        <div class="news-date">2009.07.28</div>
+        <div><div class="news-src">서울신문</div>
+        <div class="news-t">한국만화영상진흥원 초대 이사장 이현세 화백</div>
+        <div class="news-d">부천만화정보센터의 후신인 한국만화영상진흥원 개원을 앞두고 초대 이사장에 취임.</div></div>
+      </a>
+      <a class="news-item" href="https://www.koreajoongangdaily.com/lifestyle/myth-man-sketches-his-own-destiny/10220131" target="_blank" rel="noopener">
+        <div class="news-date">2007.12.18</div>
+        <div><div class="news-src">Korea JoongAng Daily <span class="news-tag">영문</span></div>
+        <div class="news-t">Myth man sketches his own destiny</div>
+        <div class="news-d">첫 개인전 「잊혀진 신화」를 계기로 한 영문 인터뷰.</div></div>
+      </a>
+      <a class="news-item" href="https://www.khan.co.kr/article/200301241826311" target="_blank" rel="noopener">
+        <div class="news-date">2003.01.24</div>
+        <div><div class="news-src">경향신문</div>
+        <div class="news-t">이현세씨 만화 &#x27;천국의 신화&#x27; 무죄확정</div>
+        <div class="news-d">대법원이 적용 법조(미성년자보호법)의 위헌 결정을 이유로 무죄를 확정했다. 2001년 항소심 무죄에 이은 결론.</div></div>
+      </a>
+      <a class="news-item" href="https://www.hankookilbo.com/news/article/200106150073256029" target="_blank" rel="noopener">
+        <div class="news-date">2001.06.15</div>
+        <div><div class="news-src">한국일보</div>
+        <div class="news-t">&#x27;천국의 신화&#x27; 이현세 무죄판결 - 만화장르 표현의 자유 확대될듯</div>
+        <div class="news-d">항소심 무죄. 만화에는 영화·그림과 다른 음란성 기준이 필요하다고 본 판결.</div></div>
+      </a>
+    </div>
+    <p class="news-note">2026년 10월 11일 기준으로 모았습니다.</p>
+  </div>
+</section>
+
+<section id="research">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">In Research</div>
+      <div class="sec-title">연구 속의 이현세</div>
+      <p class="sec-desc">이현세와 그의 작품을 정면으로 다룬 학술 논문과 학위논문 <b>6편</b>. 외인구단의 1980년대, 남벌의 1990년대,
+      천국의 신화와 만화 규제, 그리고 AI 리메이크까지. 카드를 누르면 논문 정보 페이지로 이동합니다.</p>
+    </div>
+    <a class="review" href="https://www.tcj.com/the-untouchable-aliens-of-south-korean-comics/" target="_blank" rel="noopener">
+      <div class="case-kicker">해외 평론 · The Comics Journal · 2023.2.8</div>
+      <div class="case-title">"Untouchable: Lee Hyun-se's Alien Baseball Team"</div>
+      <div class="review-by">William Schwartz — 1976년 창간한 미국 만화비평지</div>
+      <p class="review-p">「공포의 외인구단」 40주년에 맞춰 나온 장문 평론. 2,500쪽에 이르는 이야기를 따라가며, 오혜성이 사람의 한계를 무시하고 몸을 몰아붙이는 모습을 가난했던 1980년대 한국 그 자체로 읽는다. 이 작품에 대한 진지한 학술 연구가 부족하다는 점도 짚었다.</p>
+      <blockquote class="review-q">"No work of fiction, comic or otherwise, encapsulates the South Korea of the 1980s quite like Alien Baseball Team."
+        <span>만화든 아니든, 1980년대의 한국을 「공포의 외인구단」만큼 압축해 보여주는 픽션은 없다.</span></blockquote>
+      <blockquote class="review-q">"Symbolically, Alien Baseball Team is less about baseball than the extreme lengths taken by Hye-sung, a representation of the dirt-poor country of South Korea at large…"
+        <span>상징적으로 이 작품은 야구 이야기라기보다, 찢어지게 가난했던 한국을 대변하는 오혜성이 어디까지 가는가에 대한 이야기다.</span></blockquote>
+      <div class="review-more">원문 읽기 →</div>
+    </a>
+    <div class="paper-grid">
+      <a class="paper" href="https://doi.org/10.18856/jpn.2017.23.4.007" target="_blank" rel="noopener">
+        <div class="paper-meta"><span class="paper-tag">학술지 · KCI</span>이준희 · 2017</div>
+        <div class="paper-t">이현세의 만화 「공포의 외인구단」에 나타나는 정서적 과잉과 그 정치적 함의</div>
+        <div class="paper-v">『대중서사연구』 23(4)</div>
+        <div class="paper-d">신군부 시기 프로야구·스포츠 만화 붐 속에서 나온 외인구단을 1980년대 청년 독자의 감정구조와 &#x27;까치 신드롬&#x27;으로 읽는다.</div>
+      </a>
+      <a class="paper" href="https://www.riss.kr/search/detail/DetailView.do?p_mat_type=1a0202e37d52c72d&amp;control_no=32527707d4741084c85d2949c297615a" target="_blank" rel="noopener">
+        <div class="paper-meta"><span class="paper-tag">학술지 · KCI</span>윤현명 · 2022</div>
+        <div class="paper-t">만화 『남벌』에 나타난 한일전쟁과 일본 응징 정서</div>
+        <div class="paper-v">『열린정신 인문학연구』 23(3)</div>
+        <div class="paper-d">가상 한일전쟁과 응징 정서를 1990년대 한국 사회의 반일 정서와 연결해 「남벌」 인기의 배경을 설명한다.</div>
+      </a>
+      <a class="paper" href="https://www.riss.kr/search/detail/DetailView.do?p_mat_type=1a0202e37d52c72d&amp;control_no=c77cc22784a5a1ff4884a65323211ff0" target="_blank" rel="noopener">
+        <div class="paper-meta"><span class="paper-tag">학술지 · KCI</span>유건식 · 2025</div>
+        <div class="paper-t">AI를 활용한 웹툰 창작의 가능성과 한계 — &#x27;이현세 AI 프로젝트&#x27; 사례를 중심으로</div>
+        <div class="paper-v">『문화콘텐츠연구』 34</div>
+        <div class="paper-d">AI가 40여 년 화풍을 학습해 「카론의 새벽」을 컬러 웹툰으로 리메이크한 과정과 협업 방식·한계·저작권 문제.</div>
+      </a>
+      <a class="paper" href="https://www.riss.kr/search/detail/DetailView.do?p_mat_type=be54d9b8bc7cdb09&amp;control_no=95fa34ec397140f9ffe0bdc3ef48d419" target="_blank" rel="noopener">
+        <div class="paper-meta"><span class="paper-tag">석사학위논문</span>박석환 · 2005</div>
+        <div class="paper-t">만화 콘텐츠의 서사구조와 이데올로기 — 만화 천국의 신화를 중심으로</div>
+        <div class="paper-v">성균관대 대학원</div>
+        <div class="paper-d">「천국의 신화」를 기호학으로 분석. 권력관·여성 재현·역사관을 짚고 민족주의 서사를 비판적으로 본다.</div>
+      </a>
+      <a class="paper" href="https://www.riss.kr/search/detail/DetailView.do?p_mat_type=be54d9b8bc7cdb09&amp;control_no=99c33885061e85ccffe0bdc3ef48d419" target="_blank" rel="noopener">
+        <div class="paper-meta"><span class="paper-tag">박사학위논문</span>고훈 · 2015</div>
+        <div class="paper-t">한국 스포츠만화의 서사구조 연구 — 80년대와 90년대 작품을 중심으로</div>
+        <div class="paper-v">연세대 대학원</div>
+        <div class="paper-d">「공포의 외인구단」을 80년대 대표작으로 놓고 한국 스포츠만화 서사가 90년대에 어떻게 바뀌었는지 추적한다.</div>
+      </a>
+      <a class="paper" href="https://www.riss.kr/search/detail/DetailView.do?p_mat_type=be54d9b8bc7cdb09&amp;control_no=f62fe4df9abf9453ffe0bdc3ef48d419" target="_blank" rel="noopener">
+        <div class="paper-meta"><span class="paper-tag">석사학위논문</span>김태영 · 2025</div>
+        <div class="paper-t">1990년대 한국만화 규제의 의미</div>
+        <div class="paper-v">부산대 대학원</div>
+        <div class="paper-d">1990년대 만화 규제를 다루며, 검찰이 &quot;이현세 만화가를 필두로&quot; 만화가들을 무더기 기소한 일을 출발점으로 짚는다.</div>
+      </a>
+    </div>
+    <p class="news-note">2026년 10월 11일 기준으로 모았습니다.</p>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
     <div class="row">
@@ -571,7 +792,7 @@ const WORKS = {
     syn:'태고의 창세신화에서 출발해 배달국과 치우천왕의 시대, 단군조선 건국, 위만조선까지 이어지는 대하 역사 판타지. 인쇄본 47권, 이후 네이버웹툰에서 풀컬러로 재연재되며 신작 6부 \'봉황의 날개\'로 이어졌다. 연재 초기 \'음란물\' 시비로 기소되었으나 2003년 대법원에서 무죄가 확정 — 한국 만화 표현의 자유 역사에 남은 승리의 기록이기도 하다.',
     chars:[['치우천왕','배달국 시대의 중심'],['단군','조선 건국의 서사'],['위만','포로로 끌려간 자로 재해석된 6부 주인공']],
     exp:[{t:'reboot',y:2015,title:'네이버웹툰 재연재 + 신작 6부',note:'구작 47권 디지털 재편 + 풀컬러 신작 \'봉황의 날개\' 연재'}],
-    hist:'⚖️ 1998년 기소 → 2003년 1월 대법원 무죄 확정. 이 재판 과정에서 \'불량만화\' 조항에 헌법재판소 위헌결정(2002)이 내려졌다 — 한국 만화 검열사의 분기점.',
+    hist:'⚖️ <b>표현의 자유 재판 (1998–2003)</b><br>1998.2 청소년용 「창세신화」 편이 음란물로 몰려 벌금 300만 원 약식기소(구 미성년자보호법) → 1998.6 정식재판 청구 → 2000.7 1심 유죄 → 2001.6 항소심 무죄 → 2002.2 헌법재판소, 근거 조항(\'불량만화\' 정의)에 위헌결정 → <b>2003.1.24 대법원 무죄 확정.</b><br>만화가가 6년을 법정에서 싸워 만화 검열 조항을 무너뜨린 사건으로, 한국 만화 표현의 자유의 분기점이다. 2022년 웹툰협회가 이 싸움에 공로상을 줬다.',
     reco:{next:'W064',ext:[['신과함께','한국 신화 세계관 확장의 성공 사례'],['아스달 연대기','상고시대를 무대로 한 대하 판타지'],['도올의 한국사 강의','상고사를 보는 다양한 시선']]}},
   W120:{id:'W120',title:'버디',year:2007,tier:1,genre:'골프 · 성장 드라마',credits:'글 최성현 · 그림 이현세',
     log:'가난에서 벗어날 유일한 희망으로 골프에 전부를 건 소녀, 필드 위의 성장기.',
@@ -619,7 +840,8 @@ const ERAS = [
   {y:'1987',t:'국산 TV 애니의 원년',d:'「떠돌이 까치」 어린이날 방영 — 국산 최초 TV용 장편 애니'},
   {y:'1994',t:'브라운관의 오혜성',d:'KBS2 「폴리스」 — 신인 이병헌이 오혜성을 연기'},
   {y:'1995–96',t:'느와르와 묵시록',d:'「테러리스트」 남우주연상 2관왕 · 「아마게돈」 극장 개봉'},
-  {y:'1997',t:'필생의 대하물',d:'「천국의 신화」 시작 — 표현의 자유 재판 끝에 2003 무죄 확정'},
+  {y:'1997',t:'필생의 대하물',d:'「천국의 신화」 시작 — 이듬해 음란물로 기소'},
+  {y:'2003',t:'표현의 자유',d:'「천국의 신화」 대법원 무죄 확정 — 6년 재판 끝에 만화 검열 조항이 무너지다'},
   {y:'2007',t:'대통령상',d:'「버디」 대한민국 만화대상 대통령상 수상'},
   {y:'2015',t:'웹툰 시대로',d:'「천국의 신화」 네이버웹툰 풀컬러 재연재'},
   {y:'2024',t:'웹툰으로 돌아오다',d:'「명품시대」 네이버웹툰 연재 — 곽경택과 웹툰·영상 투트랙'},
